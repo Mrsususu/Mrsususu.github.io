@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>About Me</title>
+	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/css/about.css">
+</head>
+<body>
+	<div class="g-hd">
+		<div class="m-navtop">
+			<div class="m-logo f-fl">
+				<h1>Susie's Cubbyhouse</h1>
+			</div>
+			<ul class="m-nav f-fl f-pr">
+				<li><a href="#">Home</a><div class="main-triangle"></div></li>
+
+				{% for category in site.categories %}
+				<li><a href="#">{{ category.first }}</a><div class="main-triangle"></div>
+					<ul class="m-subNav">
+						{% for post in category.last %}
+			        	<li><div class="sub-triangle"></div><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+			            {% endfor %}
+	        		</ul>
+				</li>
+				{% endfor %}
+
+				<li><a href="#">About</a><div class="main-triangle triangle-bottomright"></div>
+				</li>
+			</ul>
+			<div class="m-search"></div> <!-- 该部分还没有添加 -->
+		</div>
+	</div>
+	<div class="g-bd">
+		<div class="m-wrap f-pr">
+			<div class="m-title f-pr">
+				<h2>About Me<span class="f-db"></span></h2>
+				<p>My personal introdution</p>
+				<div class="triangle-topleft-small dialogue-triangle f-pa"></div>
+			</div>
+			<div class="m-detail">
+				<div class="m-item">
+					<h3>实习经历</h3>
+					<p><span></span>公司A：干A项目</p>
+					<p><span></span>公司B：干B项目</p>
+				</div>
+				<div class="m-item">
+					<h3>项目经历</h3>
+					<p><span></span>公司A：干A项目</p>
+					<p><span></span>公司B：干B项目</p>
+				</div>
+				<div class="m-item">
+					<h3>所得荣誉</h3>
+					<p><span></span>公司A：干A项目</p>
+					<p><span></span>公司B：干B项目</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="g-ft">
+		<div class="m-wrap f-pr">
+			<div class="m-info">
+				<h1>Susie's Cubbyhouse</h1>
+				<p>design by LiShu <a href="{{ site.baseurl }}/about/index.html">联系我</a></p>
+			</div>
+			<a href="#top" target="_self" class="m-toTop f-pa f-db">
+				<span class="f-db"></span>
+			</a>
+		</div>
+	</div>
+	<script type="text/javascript" src="{{ site.baseurl }}/js/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="{{ site.baseurl }}/js/about.js"></script>	
+</body>
+</html>
