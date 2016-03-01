@@ -1,0 +1,203 @@
+
+/* 重置 */
+html,body,h1,h2,h3,h4,h5,h6,div,dl,dt,dd,ul,ol,li,p,blockquote,pre,hr,figure,table,caption,th,td,form,fieldset,legend,input,button,textarea,menu,a{margin:0;padding:0;} 
+strong,em{font-style:normal;font-weight:bold;}
+body,textarea,input,button,select,keygen,legend{font:12px/1.14  "Arial","Hiragino Sans GB","Microsoft YaHei", \5fae\8f6f\96c5\9ed1, "Helvetica", "sans-serif";color:#333;outline:0;}
+html,body,fieldset,img,iframe,abbr{border:0;}
+li{list-style:none;}
+a{text-decoration:none;}
+a,a:hover{color:#333;}
+/* 默认 */
+/* 统一调用背景图 */
+/* 统一清除浮动 */
+/*.g-bdc:after,.m-dimg ul:after,.u-tab:after{display:block;visibility:hidden;clear:both;height:0;overflow:hidden;content:'.';}
+.g-bdc,.m-dimg ul,.u-tab{zoom:1;}*/
+/* 布局 */
+/*.g-sd{float:left;width:300px;}*/
+/* 模块 */
+/*.m-logo{width:200px;height:50px;}*/
+/* 元件 */
+/*.u-btn{height:20px;border:1px solid #333;}*/
+/* 功能 */
+/*.f-tac{text-align:center;}*/
+/* 皮肤 */
+/*.s-fc,a.s-fc:hover{color:#fff;}*/
+
+.f-cb:after{content:'.';display:block;clear:both;height:0;overflow:hidden;visibility:hidden;}
+.f-ib{display:inline-block;*display:inline;*zoom:1;}
+.f-dn{display:none;}
+.f-db{display:block;}
+.f-csp{cursor:pointer;}
+.f-fl{float:left;}
+.f-fr{float:right;}
+.f-pr{position:relative;}
+.f-pa{position:absolute;}
+.f-fwn{font-weight:normal;}
+.f-fwb{font-weight:bold;}
+.f-oh{overflow:hidden;}
+
+.f-cb,.f-cbli li{zoom:1;}
+.f-toe{overflow:hidden;word-wrap:normal;white-space:nowrap;text-overflow:ellipsis;}
+/* 响应式 */
+/* 宽屏 */  /* 注意两个example采用的两层嵌套方法part1和part2 */
+@media screen and (min-width:1205px){
+	.g-hd .m-topnav .wrap,.g-hd .m-botnav{width:1205px;}
+	.g-bd .m-slide a{width:1616px;margin:0 auto;} /* example1 part1 */
+	.g-bd .m-slide img{margin:0 -18px;} /* 图片原长1652px,a宽度1616px.(1616-1652)/2=118px */  /* example1 part2 */
+	.g-bd .m-prodect{width:1207px;margin:0 auto;} /* 就是ul包围部分的大小 */
+	.g-bd .m-prodect span{width:80px;height:230px;margin:66px 18px 0 25px;}
+	.g-bd .m-prodect li{width:370px;margin-right:30px;} 
+	.g-bd .m-workplace .box{width:1616px;margin:0 auto;} /* 必须添加width，不然margin不起作用。因为width大小会默认和父元素一样大，因为box里面是float元素，不会撑大box盒子。 */
+	.g-bd .g-bot{width:1205px;}
+	.g-bd .g-content{width:960px;} /* width为225 margin-right为20 (225+20)*4-20=960 */ 
+	.g-bd .g-content .design, .g-bd .g-content .language{width:980px;} /* width为225 margin-right为20 (225+20)*4=980 */
+	.g-ft .m-ft{width:1205px;}
+	}
+/* 窄屏 */
+@media screen and (max-width:1205px){
+	.g-hd .m-topnav .wrap,.g-hd .m-botnav{width:960px;}
+	.g-bd .m-slide a{width:1364px;margin:0 auto;}
+	.g-bd .m-slide img{margin:0 -144px;}
+	.g-bd .m-prodect{width:960px;margin:0 auto;}
+	.g-bd .m-prodect span{width:80px;height:230px;margin:66px 20px 0 0;}
+	.g-bd .m-prodect li{width:285px;margin:0 15px;} 
+	.g-bd .m-workplace{width:1364px;} /* 视觉稿里的宽度，两边需要overflow:hidden */ /* example2 part1 */
+	.g-bd .m-workplace .box{width:1616px;margin:0 -126px;} /* 实际会有宽度320*5+4*4=1616.然后左移一部分使其居中(1364-1616)/2=-126px */ /* example2 part2 */
+	.g-bd .g-bot{width:960px;}
+	.g-bd .g-content{width:715px;} /* m-item的width为225 margin-right为20【其box-shadow可以不考虑】 (225+20)*3-20=715 */ /* 其实实际图片宽度 */
+	.g-bd .g-content .design, .g-bd .g-content .language{width:735px;}
+	.g-ft .m-ft{width:960px;}
+	}
+
+/* 头部 */
+.g-hd{color:#333;}
+.g-hd .m-topnav{height:36px;width:100%;background-color:#f3f3f3}
+.g-hd .m-topnav .wrap{margin:0 auto;}
+.g-hd .m-topnav p{line-height:12px;margin:12px 0;}
+.g-hd .m-topnav p:last-child{background:url(../images/sprite.png) no-repeat;text-indent:15px;} /*特别注意，图标采用sprite。然后background中定位的意义，是移动sprite然后让其某部分在已有固定的填充背景的content框中显示*/
+.g-hd .m-topnav a{color:#21a557;}
+
+.g-hd .m-botnav{height:22px;margin:0 auto;padding:30px 0 37px 0;}
+.g-hd .m-logo{padding-right:31px;}
+.g-hd .m-logo h2{font-size:22px;}
+.g-hd .m-logo h2 span{margin-right:13px;padding-right:13px;top:3px;width:71px;color:#39a030;font-size:28px;background:url(../images/sprite.png) no-repeat right 6px;}
+
+.g-hd .m-login{top:8px;color:#666;}
+.g-hd .m-login .attention{width:54px;height:21px;padding-left:22px;border:none;border-radius:2px;background:#21a557 url(../images/sprite.png) -18px 0;color:#fff;font-size:12px;line-height:21px;}
+.g-hd .m-login .attention:hover{background-color:#2fb556;cursor:pointer;}
+.g-hd .m-login .active{width:106px;height:21px;padding-left:22px;border:1px solid #efefef;background:#fff url(../images/sprite.png) no-repeat -278px -192px;border-radius:2px;color:#333;outline:none;text-align:left;}
+.g-hd .m-login .cancel{top:5px;left:66px;padding:0 5px 0 5px;border-left:1px solid #ccc;color:#999;}
+.g-hd .m-login .cancel:hover{color:#21a557;text-decoration:underline;}
+.g-hd .m-login .fans{margin-left:14px;}
+
+
+.g-hd .m-login .popuplog{position:fixed;top:0;left:0;z-index:999;width:100%;height:100%;}
+.g-hd .m-login .popuplog .bg{width:100%;height:100%;background-color:rgba(0,0,0,0.8);}
+.g-hd .m-login .popuplog .popup{position:fixed;top:50%;left:50%;width:388px;height:288px;margin:-144px 0 0 -194px;background-color:#fff;}
+.g-hd .m-login .popuplog p{margin:30px 0 20px 40px;font-size:17px;color:#444;}
+.g-hd .m-login .popuplog .close{top:10px;right:10px;width:9px;height:9px;background:url(../images/sprite.png) no-repeat 0 0;}
+/*
+.g-hd .m-login .popuplog form{margin:0 40px;}
+.g-hd .m-login .popuplog input{border:none;outline:none;}
+.g-hd .m-login .popuplog .text{width:290px;height:40px;margin-bottom:30px;text-indent:10px;font-size:14px;border-top: 1px solid #dfdfdf;border-left: 1px solid #dfdfdf;box-shadow:inset 1px 1px 2px 1px #f1f1f1;background-color:#fafafa;color:#000;}
+.g-hd .m-login .popuplog .submit{width:293px;height:46px;color:#fff;background:url(../images/sprite.png) no-repeat 0 -85px;cursor:pointer;} 
+ */
+.g-hd .m-login .popuplog input{border:none;outline:none;}
+.g-hd .m-login .popuplog .form{margin:0 40px 30px 40px;}
+.g-hd .m-login .popuplog .form input{display:block;width:290px;height:40px;text-indent:10px;font-size:14px;border-top: 1px solid #dfdfdf;border-left: 1px solid #dfdfdf;box-shadow:inset 1px 1px 2px 1px #f1f1f1;background-color:#fafafa;color:#000;}  /* 注意text-indent的作用 */
+.g-hd .m-login .popuplog label{position: absolute; top:12px; left:12px; font-size:16px; color:#ccc;}
+.g-hd .m-login .popuplog .submit{margin:0 0 30px 40px;width:293px;height:46px;color:#fff;background:url(../images/sprite.png) no-repeat 0 -85px;cursor:pointer;}
+.g-hd .m-nav{padding-right:12px;}
+.g-hd .m-nav a{margin-left:54px;font-size:16px;color:#333;}
+.g-hd .m-nav a:hover{color:#21a557;}
+.g-hd .m-nav .search{width:18px;height:18px;background:url(../images/sprite.png) no-repeat left -15px;}
+.g-hd .m-nav .search:hover{background:url(../images/sprite.png) no-repeat left -33px;}
+
+
+/* 主体 */
+.g-bd{width:100%;background-color:#f8f8f8;}
+.g-bd .g-top{background-color:#ffffff;}
+.g-bd .g-top .m-slide{margin:0 auto;}
+.g-bd .m-slide ul{bottom:20px;} /* !!此处，left需要用js来写入，以保证自适应 */
+.g-bd .m-slide li{float:left;width:10px;height:10px;border-radius:50%;margin:5px;background-color:#fff;text-indent:-1000px;}
+.g-bd .m-slide .active{background-color:#333;}
+
+.g-bd .m-prodect .icon1{background:url(../images/sprite.png) no-repeat 0 -131px;}
+.g-bd .m-prodect .icon2{background:url(../images/sprite.png) no-repeat -80px -131px;}
+.g-bd .m-prodect .icon3{background:url(../images/sprite.png) no-repeat -160px -131px;}
+.g-bd .m-prodect .item h3{padding-top:46px;color:#333;font-size:22px;line-height:52px;} /* 内容会在前面浮动元素的margin外面 */
+.g-bd .m-prodect .item p{height:120px;color:#666;font-size:14px;line-height:24px;}
+.g-bd .m-prodect .item a{ font-size:14px; color:#39a030;}
+.g-bd .m-prodect .item a:hover{ text-decoration:underline;}
+
+.g-bd .m-workplace{height:224px;background-color:#f8f8f8;}
+.g-bd .m-workplace .box{height:224px;}
+.g-bd .m-workplace img{float:left; margin-right:4px;}
+.g-bd .m-workplace .last{margin-right:0;}
+
+.g-bd .g-bot{margin:0 auto;padding-top:80px;}
+.g-bd .g-tabhd{width:400px;margin-bottom:30px;box-shadow:1px 1px 1px #dcdcdc;}
+.g-bd .g-tabhd a{width:200px;height:50px;font-size:20px;line-height:50px;text-align:center;background-color:#fff;color:#666;}
+.g-bd .g-tabhd .active{background-color:#39a030;color:#fff;}
+
+.g-bd .g-content{height:1250px;}/*.g-bd .g-content{margin-left:-10px;}，对应于.g-bd .g-content .m-item{margin:0 10px 20px 10px;}*/
+.g-bd .g-content .m-item{position:relative;float:left;width:225px;height:230px;margin:0 20px 20px 0;box-shadow:0 1px 1px 1px #e6e6e6;background-color:#fff;} /* 如果content出现小数，证明可能长度不够，应该适当增加长度 */
+.g-bd .m-item img{margin-bottom:10px;width:223px;} /*照片实际上有大小，因而需要统一设置宽度*/
+.g-bd .m-item p{width:210px;padding-left:5px;font-size:12px;}
+.g-bd .m-item .provider{padding:10px 5px;color:#999;}
+.g-bd .m-item span{padding:0 3px 0 18px;margin-left:5px;border:1px solid #ddd;border-radius:2px;font-size:10px;line-height:16px;text-align:center;color:#999;background:url(../images/sprite.png) no-repeat 0 -52px;}
+.g-bd .m-item strong{display:block;color:#ff3f00;padding-top:10px;padding-left:5px;}
+.g-bd .m-item a{ display:none;cursor:pointer;}
+.g-bd .m-item:hover a{ display:block; position:absolute; top:-10px; left:-10px; width:461px; min-height:218px; background:#fff; padding:10px; box-shadow:0 0 2px 1px #d3d1d2; z-index:99;}
+.g-bd .m-item a img{ float:left;}
+.g-bd .m-item a h3{ font-size:20px; font-weight: normal; margin:0 10px 12px 233px; color:#333; }
+.g-bd .m-item a span{font-size:12px; border:none; background:url(../images/sprite.png) no-repeat 0 -52px; color:#666; }
+.g-bd .m-item a .categoryname{ height:35px; font-size:12px; line-height: 18px; padding:10px 0 0 233px; color:#666;}
+.g-bd .m-item a .description{ clear:both; width:426px; padding-left:15px; font-size:14px; line-height:20px; }
+
+.g-bd .m-page{padding:30px 0 123px 0;} /* 两个实现方式：1、a设置inlin-block，但是这样的话两个a之间必须紧密放置，不然会有空隙；2、a设置block，然后设置float，这样的话可以保持a间有空格但是实际显示时不会有空隙。 */
+.g-bd .m-page a{display:block;float:left;padding:0 6px;margin:0 4px;line-height:20px;}
+.g-bd .m-page a:hover{background-color:#9dd8b1;color:#fff;}
+.g-bd .m-page .active{color:#39a030;}
+.g-bd .m-page .prve, .g-bd .m-page .next{width:30px;height:20px;padding:0;margin:0;}
+.g-bd .m-page .prve, .g-bd .m-page .prve:hover{background:#9dd8b1 url(../images/sprite.png) no-repeat -18px -16px;}
+.g-bd .m-page .next, .g-bd .m-page .next:hover{background:#9dd8b1 url(../images/sprite.png) no-repeat -48px -16px;}
+
+.g-bd .m-video{width:224px;height:230px;margin-bottom:20px;background-color:#fff;box-shadow:0 1px 1px 1px #e6e6e6;}
+.g-bd .m-video h3, .g-bd .m-list h3{height:55px;padding-left:20px;line-height:55px;border-bottom:1px solid #ddd;font-size:16px;}
+.g-bd .m-video>p{padding-left:20px;margin-top:20px;font-size:14px;color:#666;}
+.g-bd .m-video .trigger .videobg{padding-left:20px;margin-top:10px;}
+.g-bd .m-video .trigger .play{top:42px;left:90px;}
+
+.g-bd .m-video .popupvideo{position:fixed;top:0;left:0;z-index:999;width:100%;height:100%;}
+.g-bd .popupvideo .bg{width:100%;height:100%;z-index:999;background-color:rgba(0,0,0,0.8);}
+.g-bd .popupvideo .popup{position:fixed;top:50%;left:50%;width:950px;height:676px;margin:-338px 0 0 -475px;background-color:#fff;} 
+/* top和left为左上角顶点的位置。因此如果需要居中，还需要margin来执行位移.676/2=338,950/2=475 */
+.g-bd .popupvideo .popup p{padding-left:30px;font-size:20px;line-height:70px;}
+.g-bd .popupvideo .popup video{width:889px;height:538px;margin:0 30px;}
+.g-bd .popupvideo .popup .close{top:10px;right:10px;width:9px;height:9px;background:url(../images/sprite.png) no-repeat 0 0;}
+
+.g-bd .m-list{width:224px;height:776px;background-color:#fff;box-shadow:0 1px 1px 1px #e6e6e6;}
+.g-bd .m-list h3{margin-bottom:20px;}
+.g-bd .m-wrap{height:700px;}
+.g-bd .m-wrap ul{margin:0 20px;}
+.g-bd .m-wrap li{height:50px;margin-bottom:20px;cursor:pointer;}
+.g-bd .m-wrap a{display:block;height:50px;}
+.g-bd .m-wrap a img{float:left;height:50px;width:50px;margin-right:14px;}
+.g-bd .m-wrap a p{width:120px;padding:5px 0 8px 0;font-size:14px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;} /* 224-20*2-50-14=120px; */
+.g-bd .m-wrap a span{padding-left:18px;background:url(../images/sprite.png) no-repeat 0 -53px;}
+
+
+/* 脚部 */
+.g-ft{background-color:#2c3339;}
+.g-ft .m-ft{height:262px;margin:0 auto;}
+.g-ft .copyRight{width:540px;padding:90px 0 0 50px;color:#39a030;}
+.g-ft .copyRight .m-logo h2{font-size:22px;}
+.g-ft .copyRight .m-logo h2 span{margin-right:13px;padding-right:13px;top:3px;width:71px;font-size:28px;background:url(../images/sprite.png) no-repeat right 6px;}
+.g-ft .copyRight p{clear:both;margin-top:25px;line-height:25px;font-size:12.5px;color:rgba(255,255,255,0.6);}
+
+.g-ft .link{float:left;padding-top:80px;margin-right:100px;color:rgba(255,255,255,0.6);font-size:12.5px;}
+.g-ft .link:last-child{margin-right:0;}
+.g-ft .link a{display:block;margin-top:15px;color:rgba(255,255,255,0.6);font-size:14.5px;}
+.g-ft .link a:hover{text-decoration:underline;}
+.g-ft .weibo{padding-right:35px;background:url(../images/sprite.png) no-repeat -245px -25px;}

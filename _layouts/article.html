@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Article</title>
+	<title>{{ page.title }}</title>
 	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/css/article.css">
 </head>
@@ -13,21 +13,19 @@
 				<h1>Susie's Cubbyhouse</h1>
 			</div>
 			<ul class="m-nav f-fl f-pr">
-				<li><a href="#">Home</a><div class="main-triangle"></div></li>
-				<li><a href="#">Article</a><div class="main-triangle triangle-bottomright"></div>
+				<li><a href="{{ site.baseurl }}/">Home</a><div class="main-triangle"></div></li>
+
+				{% for category in site.categories %}
+				<li><a href="#">{{ category.first }}</a><div class="main-triangle"></div>
 					<ul class="m-subNav">
-			        	<li><div class="sub-triangle"></div><a href="#">二级菜单</a></li>
-			            <li><div class="sub-triangle"></div><a href="#">二级菜单</a></li>
-			            <li><div class="sub-triangle"></div><a href="#">二级菜单</a></li>
-			            <li><div class="sub-triangle"></div><a href="#">二级菜单</a></li>
-			        </ul>
+						{% for post in category.last %}
+			        	<li><div class="sub-triangle"></div><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+			            {% endfor %}
+	        		</ul>
 				</li>
-				<li><a href="#">About</a><div class="main-triangle"></div>
-					<ul class="m-subNav">
-			        	<li><div class="sub-triangle"></div><a href="#">二级菜单</a></li>
-			            <li><div class="sub-triangle"></div><a href="#">二级菜单</a></li>
-			            <li><div class="sub-triangle"></div><a href="#">二级菜单</a></li>
-			        </ul>
+				{% endfor %}
+
+				<li><a href="{{ site.baseurl }}/about">About</a><div class="main-triangle"></div>
 				</li>
 			</ul>
 			<div class="m-search"></div> <!-- 该部分还没有添加 -->
@@ -37,17 +35,18 @@
 		<div class="m-wrap f-oh">
 			<div class="g-main f-fr">
 				<div class="m-articleContent">
+					<h2 id="title">{{ page.title }}</h2>
+					<h4 id="date">{{ page.date | date: "%m-%d-%Y" }}</h4>
 					{{ content }}
 				</div>
 			</div>
 			<div class="g-side f-fl">
 				<div class="m-category">
-					<h1>1</h1>
-					<h2>1.1</h2>
-					<h2>1.2</h2>
-					<h1>2</h1>
-					<h2>2.1</h2>
-					<h2>2.2</h2>
+					<h1>文章目录</h1>
+					{% for category in site.categories %}
+					<h2>{{ category.first }}({{ category | last | size }})</h2>
+					{% endfor %}
+					
 				</div>
 			</div>
 		</div>

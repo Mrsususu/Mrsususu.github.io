@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Reaction Tester</title>
+
+	<style type="text/css">
+		body {
+			font-family: Verdana, Geneva, sans-serif; 
+		}
+
+		#box {
+			width: 200px;
+			height: 200px;
+			background-color: red;
+			display: none;
+			position: relative;
+		}
+
+		.bold {
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+	<h1>Test your reactions!</h1>
+	<p>Click on the boxes and circles as quickly as you can!</p>
+	<p class="bold">Your Time: <span id="time">0</span>s</p>	 <!--设置0，使得未开始时也有值-->
+	<div id="box"></div>
+
+	<script type="text/javascript">
+
+		var createdTime;
+		var clickedTime;
+		var reactionTime;
+
+		function getRandomColor() {
+		    var letters = '0123456789ABCDEF'.split('');
+		    var color = '#';
+		    for (var i = 0; i < 6; i++ ) {
+		        color += letters[Math.floor(Math.random() * 16)];
+		    }
+		    return color;
+		}
+
+		function makebox() {
+			var time = Math.random();
+			time = time*5000;
+
+			setTimeout(function() {
+				if(Math.random()>0.5) {
+					document.getElementById("box").style.borderRadius = "100px";
+				} else {
+					document.getElementById("box").style.borderRadius = "0";
+				}
+
+				var top = Math.random() * 300;
+				var left = Math.random() * 500;
+				document.getElementById("box").style.top = top + "px"; /*注意要加上px!!*/
+				document.getElementById("box").style.left = left + "px";
+				document.getElementById("box").style.backgroundColor = getRandomColor();
+				document.getElementById("box").style.display = "block";
+				createdTime = Date.now();
+			}, time);
+		}
+
+		
+		document.getElementById("box").onclick = function() {
+			clickedTime = Date.now();
+			reactionTime = (clickedTime-createdTime)/1000;
+			document.getElementById("time").innerHTML = reactionTime;
+
+			this.style.display = "none";
+			makebox();
+		}
+
+		makebox();
+
+	</script>
+</body>
+</html>

@@ -1,1 +1,5 @@
-baseurl: ""
+excerpt_separator: "<!--brief-->"
+paginate: 6
+paginate_path: "page:num"
+gems: [jekyll-paginate]
+highlighter: rouge

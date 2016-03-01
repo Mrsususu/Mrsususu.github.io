@@ -1,7 +1,7 @@
 
 html,body,h1,h2,h3,h4,h5,h6,div,dl,dt,dd,ul,ol,li,p,blockquote,pre,hr,figure,table,caption,th,td,form,fieldset,legend,input,button,textarea,menu,a{margin:0;padding:0;} 
 strong,em{font-style:normal;font-weight:bold;}
-body,textarea,input,button,select,keygen,legend{font:12px/1.14  "Arial","Hiragino Sans GB","Microsoft YaHei", \5fae\8f6f\96c5\9ed1, "Helvetica", "sans-serif";color:#333;outline:0;}
+body,textarea,input,button,select,keygen,legend{font:12px/1.14  "Martel Sans","PT Serif","STZhongsong","华文中宋","Microsoft YaHei", \5fae\8f6f\96c5\9ed1, "Helvetica", "sans-serif";color:#333;outline:0;}
 html,body,fieldset,img,iframe,abbr{border:0;}
 li{list-style:none;}
 a{text-decoration:none;}
@@ -44,10 +44,24 @@ body {background-color:#ececec;}
 .g-bd {width:100%;}
 .g-bd .m-wrap {margin:20px auto;width:1180px;}
 .g-bd .m-wrap .g-main, .g-bd .m-wrap .g-side {background-color:#fff;}
-.g-bd .m-wrap .g-main {width:910px;height:1000px;}
+.g-bd .m-wrap .g-main {width:910px;}
 .g-bd .m-wrap .g-main .m-articleContent {padding:20px;}
 .g-bd .m-wrap .g-side {width:250px;}
-.g-bd .m-wrap .g-side .m-category {padding:10px;}
+.g-bd .m-wrap .g-side .m-category {padding:20px;}
+.g-bd .m-wrap .g-side .m-category h1 {padding-bottom:10px;margin-bottom:10px;border-bottom:4px solid #ececec;}
+.g-bd .m-wrap .g-side .m-category h2 {line-height:30px;}
+
+/* Article样式 */
+.m-articleContent {color:#555;font-size:16px;line-height:30px;}
+.m-articleContent #title {font-size:35px;line-height:50px;color:#000;}
+.m-articleContent #date {font-size:18px;line-height:30px;font-weight:normal;color:#898989;margin-bottom:20px;}
+.m-articleContent h2 {font-size:25px;line-height:50px;}
+.m-articleContent h3 {font-size:20px;line-height:40px;}
+.m-articleContent p {margin-bottom:10px;}
+.m-articleContent ul {padding:10px 30px;}
+.m-articleContent li {font-weight:bold;}
+.m-articleContent a {text-decoration:underline;}
+.m-articleContent a:hover {color:#000;}
 
 /* 脚步 */
 .g-ft {width:100%;}
@@ -59,4 +73,4 @@ body {background-color:#ececec;}
 .g-ft .m-info p a {text-decoration:underline;}
 .g-ft .m-toTop {right:0;top:0;width:100px;height:100px;background-color:#00ccff;}
 .g-ft .m-toTop:hover {background-color:#1a1a1a;} 
-.g-ft .m-toTop span {width:32px;height:32px;margin:34px;background:url(img/icon.png) no-repeat 0 -90px;}
+.g-ft .m-toTop span {width:32px;height:32px;margin:34px;background:url(../img/icon.png) no-repeat 0 -90px;}

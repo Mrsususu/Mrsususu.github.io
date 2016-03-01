@@ -28,8 +28,21 @@ $(function(){
 		$('ul', this).slideUp(100);
 	});
 
-	/* slide动画，点击播放 */
+	/* slide动画，点击播放 */ /* 此模块暂时删除 */
 	slideClick();
+
+	/* articleItem的hover变色 */
+	$('.g-content .articles li').hover(function(){
+		$(this).children().addClass('active');	
+	},function(){
+		$(this).children().removeClass('active');
+	});
+
+	/* articleItem的页面跳转 */
+	$('.articleItem').bind('click',function(){
+		var href = $(this).prev().attr('href');
+		location.href = href;
+	});
 
 })
 

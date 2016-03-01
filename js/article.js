@@ -1,6 +1,6 @@
 $(function(){
 	/* 一级nav的hover动画 */
-	$('.m-nav>li:not(:eq(1))').mouseover(function(){
+	$('.m-nav>li').mouseover(function(){
 		$(this).find('div.main-triangle').addClass('triangle-bottomright');
 	}).mouseout(function(){
 		$(this).find('div.main-triangle').removeClass('triangle-bottomright');

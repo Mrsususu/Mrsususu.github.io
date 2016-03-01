@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>App Landing Page</title>
+
+	 <!-- Bootstrap -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	 <!--[if lt IE 9]>
+	 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	 <![endif]-->
+	 <style type="text/css">
+
+		.navbar-brand {
+			font-size: 1.8em;
+		}
+
+		#topContainer {
+			background-image: url(images/background.jpg); /*可以发现图片的高度是从container算起，container的起始位置是在顶端*/
+			width: 100%;
+			background-size: cover; /*注意background-size的作用*/
+		}
+
+		#topRow {
+			margin-top: 100px;
+			text-align: center;  /*注意text-align放置的位置，如果放置到#topRow h1中，则后面的几个p都无法居中了*/
+		}
+
+		#topRow h1 {		
+			font-size: 4em;
+		}
+
+		.bold {
+			font-weight: bold;
+		}
+
+		.marginTop {
+			margin-top: 30px;
+		}
+
+		.center {
+			text-align: center;
+		}
+
+		.title {
+			margin-top: 100px;
+			font-size: 4em;
+		}
+
+		.marginBottom {
+			margin-bottom: 30px;
+		}
+
+		#footer {
+			background-color: #B0D1FB;
+			width: 100%;
+			padding-top: 70px;
+		}
+
+		.appstoreImage {
+			width: 250px;
+		}
+
+	 </style>
+	 
+</head>
+<body>
+
+<!--navbar-->
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navber-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a href="#" class="navbar-brand">My App</a>
+			</div>
+
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#home">Home</a></li>
+					<li><a href="#about">About</a></li>
+					<li><a href="#download">Download The App</a></li>
+					<form class="navbar-form navbar-right"> <!--表单-->
+						<div class="form-group">
+							<input type="email" class="form-control" placeholder="Email">
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control" placeholder="Password">
+						</div>
+						<button type="submit" class="btn btn-success">Loge In</button> <!--button和input都可以表示按键，就在type里设置submit就好。然后input的按键里的值使用属性value填充的，button里的是用在button标签内写内容来填充的-->
+					</form>
+				</ul>
+			</div> <!-- /.navbar-collapse -->
+		</div> <!-- /.container -->
+	</nav>
+
+<!--page1-->
+	<div class="container contentContainer" id="topContainer">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3" id="topRow">
+				<h1 class="marginTop">My Awesome App</h1>
+				<p class="lead">This is why should download this fantastic app.</p> <!--注意这个lead的class.Make a paragraph stand out by adding .lead.-->
+				<p>Some more information about the app. You can go into a little more detail here if you want to.</p>
+				<p class="bold marginTop">Interested? Join our mailing list!</p>
+				<form class="marginTop">
+					<div class="input-group">
+						<span class="input-group-addon">@</span>
+						<input type="email" class="form-control" placeholder="Email">
+					</div>
+					<input type="submit" class="btn btn-success btn-lg marginTop" value="Submit">
+
+
+				</form>
+			</div>			
+		</div> <!-- /.row -->
+	</div>
+
+<!--page2-->
+	<div class="container contentContainer">
+		<div class="row center">
+			<h1 class="title">Why This App Is Awesome</h1>
+			<p class="lead">Summary of the app's awesomeness</p>
+		</div>
+
+		<div class="row marginBottom">
+			<div class="col-md-4 marginTop">
+				<h2><span class="glyphicon glyphicon-music"></span>&nbspHeader</h2>
+				<p>A brief description of one of the best features of your app.Maybe a little more text.A brief description of one of the best features of your app. Maybe a little more text.</p>
+				<button class="btn btn-success marginTop">Sign Up!</button> <!--大部分浏览器button的默认type为提交，只有在IE里button的type默认是button按键-->
+			</div>
+			<div class="col-md-4 marginTop">
+				<h2><span class="glyphicon glyphicon-off"></span>&nbspHeader</h2>
+				<p>A brief description of one of the best features of your app.Maybe a little more text.A brief description of one of the best features of your app. Maybe a little more text.</p>
+				<button class="btn btn-success marginTop">Sign Up!</button> <!--大部分浏览器button的默认type为提交，只有在IE里button的type默认是button按键-->
+			</div>
+			<div class="col-md-4 marginTop">
+				<h2><span class="glyphicon glyphicon-pencil"></span>&nbspHeader</h2>
+				<p>A brief description of one of the best features of your app.Maybe a little more text.A brief description of one of the best features of your app. Maybe a little more text.</p>
+				<button class="btn btn-success marginTop">Sign Up!</button> <!--大部分浏览器button的默认type为提交，只有在IE里button的type默认是button按键-->
+			</div>
+			
+		</div>
+	</div>
+
+<!--page3-->
+	<div class="container contentContainer" id="footer">
+		<div class="row center">
+			<h1 class="title">Download The App!</h1>
+			<p class="lead">Really, why should I download this app?</p>
+			<img src="images/AppStoreIcon.png" class="appstoreImage marginTop"> <!--设置appstoreImage的class是为了设置图片的大小-->
+		</div>
+	</div>
+
+
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>--> <!--if the network allowed->
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="js/bootstrap.min.js"></script>
+
+	<script>
+		$(".contentContainer").css("min-height",$(window).height()); /*该属性值会对元素的高度设置一个最低限制。因此，元素可以比指定值高，但不能比其矮。不允许指定负值。*/
+ 	</script>
+</body>
+</html>

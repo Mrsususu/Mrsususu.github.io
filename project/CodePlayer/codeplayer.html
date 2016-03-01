@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CodePlayer</title>
+	<link rel="stylesheet" type="text/css" href="codeplayer.css">
+	
+</head>
+<body>
+	<div id="wrapper">
+		<div id="menuBar">
+			<div id="logo">
+				CodePlayer
+			</div>
+			<div id="buttonDiv">
+				<button id="runButton">Run</button>
+			</div>
+			<ul id="toggles">
+				<li class="toggles selected">HTML</li>
+				<li class="toggles">CSS</li>
+				<li class="toggles">JS</li>
+				<li class="toggles selected" style="border:none">Result</li>
+			</ul>
+
+		</div>
+
+		<div class="codeContainer" id="HTMLContainer">
+			<div class="codeLabel">HTML</div>
+			<div class="outer"><textarea id="htmlCode">example</textarea></div> <!--这个outer的div对于盒子的布局很重要，使得格式更加规范有条理-->
+		</div>
+
+		<div class="codeContainer" id="CSSContainer">
+			<div class="codeLabel">CSS</div>
+			<div class="outer"><textarea id="cssCode">example</textarea></div>
+		</div>
+
+		<div class="codeContainer" id="JSContainer">
+			<div class="codeLabel">JS</div>
+			<div class="outer"><textarea id="jsCode">example</textarea></div>
+		</div>
+
+		<div class="codeContainer" id="ResultContainer">
+			<div class="codeLabel">Result</div>
+			<iframe id="resultFrame"></iframe>
+		</div>
+
+	</div>
+	<script type="text/javascript" src="jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="codeplayer.js"></script>
+	<!--
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript">
+		window.jQuery || document.write('<script type="text/javascript" src="jquery-1.11.3.min.js"></script>')
+	</script>
+	-->
+</body>
+</html>
