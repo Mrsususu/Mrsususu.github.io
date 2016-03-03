@@ -65,9 +65,6 @@ body {background-color:#ececec;}
 .m-articleContent .em {font-weight:bold;}
 .m-articleContent .cl {color:red;}
 
-/* 代码高亮部分样式 */
-.m-articleContent .highlight {background-color:#f8f8f8;border-left:3px solid #ccc;padding:10px 25px;margin-bottom:10px;}
-
 /* 脚步 */
 .g-ft {width:100%;}
 
