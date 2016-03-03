@@ -38,7 +38,7 @@ p.test1
 {% endhighlight %}
 <p>例子中有两个长单词，"woooooooord"和"veryveryveryveryvery"（实际长度为代码中长度，后面简称为<em class="em cl">WORD类</em>和<em class="em cl">VERY类</em>）。WORD的长度小于盒子的宽度，但是其和前面字符组合起来看，可以发现第一行中已经放不下WORD的长度了。VERY的长度更长，仅其一个单词长度就超过了盒子的宽度。所以其实讨论的就是WORD和VERY这两类单词。</p>
 <p>上面代码执行结果：</p>
-<p><img src="/img/article/cssword01.png"></p>
+<p><img src="{{ site.baseurl }}/img/article/cssword01.png"></p>
 <p>可以发现，不管是WORD还是VERY，都断行了。这也就是体现了前面说的“简单粗暴”换行，一旦长度超出盒子，就断行。</p>
 <h3>word-wrap:break-word</h3>
 <p>类比上面的例子，将属性改为word-wrap:break-word。</p>
@@ -54,7 +54,7 @@ p.test2
 
 {% endhighlight %}
 <p>上面代码执行结果：</p>
-<p><img src="/img/article/cssword02.png"></p>
+<p><img src="{{ site.baseurl }}/img/article/cssword02.png"></p>
 <P>可以发现，WORD没有断行，而是直接进入了下一行；而VERY也是直接进入下一行，但是在下一行中执行了断行。</P>
 <p>这样差别就非常显而易见了。word-wrap:break-word执行断行的对象只是VERY类单词，即长度超过了盒子宽度的单词。其对WORD类单词没有影响。而且其对VERY类单词也是另起一行再断行。</p>
 <h2>总结</h2>
