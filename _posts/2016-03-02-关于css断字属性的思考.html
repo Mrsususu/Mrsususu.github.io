@@ -1,0 +1,62 @@
+---
+layout: article
+title:  "关于css断字属性的思考"
+date:   2016-03-02
+author:  lishu
+categories: 前端技术
+---
+
+<p>css中的word-wrap和word-break两个属性看着很相似，在使用的时候也经常容易记混，所以本文来辨析一下这两个属性的区别。</p>
+<!--brief-->
+<h2>概念理解</h2>
+首先看一下这两个参数在css手册上的定义。
+<h3>word-break</h3>
+<p>"The word-break CSS property is used to specify whether to break lines within words."</p>
+<p>意思也就说word-break用于来规定在单词内是否执行断行。</p>
+<h3>word-wrap</h3>
+<p>"The word-wrap property is used to specify whether or not the browser may break lines within words in order to prevent overflow when an otherwise unbreakable string is too long to fit in its containing box."</p>
+<p>意思是说当一个不能被分开的字符串太长而不能填充其包裹盒时，为防止其溢出，浏览器是否允许这样的单词中断换行。</p>
+<h3>辨析</h3>
+<p>可以发现两个属性都涉及到单词断行，word-break是指单纯的对于长单词而言，一旦单词长度超出行尾时，能否对这个单词进行断行。而word-wrap其实只是对一种特殊情况的单词是否执行断行的判断，这种特殊情况的单词就是“字符串太长而不能填充其包裹盒”。对于一般的长单词而言，其实word-wrap并不能起到断行的作用。</p>
+
+<h2>实例分析</h2>
+<p>上面的概念辨析可能并不是很直观，那么就用实际的例子来看一下效果。</p>
+<p>我们知道word-break的语法为[normal | break-all | keep-all]，word-wrap的语法为[normal | break-word]。我们就选择两个属性中分别属于断行的值break-all和break-word进行分析。</p>
+<h3>word-break:break-all</h3>
+<p>我对于这个word-break:break-all的理解就是简单粗暴地单词换行，一旦本单词太长超出盒子范围，就执行断行。</p>
+<p>我们来看下面的这个例子</p>
+{% highlight ruby %}
+
+p.test1
+{
+	width:11em; 
+	border:1px solid #000000;
+	word-break:break-all;
+}
+<p class="test1">This is a wooooooooooooord veryveryveryveryveryveryveryveryveryvery long paragraph.</p>
+
+{% endhighlight %}
+<p>例子中有两个长单词，"woooooooord"和"veryveryveryveryvery"（实际长度为代码中长度，后面简称为<em class="em cl">WORD类</em>和<em class="em cl">VERY类</em>）。WORD的长度小于盒子的宽度，但是其和前面字符组合起来看，可以发现第一行中已经放不下WORD的长度了。VERY的长度更长，仅其一个单词长度就超过了盒子的宽度。所以其实讨论的就是WORD和VERY这两类单词。</p>
+<p>上面代码执行结果：</p>
+<p><img src="/img/article/cssword01.png"></p>
+<p>可以发现，不管是WORD还是VERY，都断行了。这也就是体现了前面说的“简单粗暴”换行，一旦长度超出盒子，就断行。</p>
+<h3>word-wrap:break-word</h3>
+<p>类比上面的例子，将属性改为word-wrap:break-word。</p>
+{% highlight ruby %}
+
+p.test2
+{
+	width:11em; 
+	border:1px solid #000000;
+	word-wrap:break-word;
+}
+<p class="test2">This is a wooooooooooooord veryveryveryveryveryveryveryveryveryvery long paragraph.</p>
+
+{% endhighlight %}
+<p>上面代码执行结果：</p>
+<p><img src="/img/article/cssword02.png"></p>
+<P>可以发现，WORD没有断行，而是直接进入了下一行；而VERY也是直接进入下一行，但是在下一行中执行了断行。</P>
+<p>这样差别就非常显而易见了。word-wrap:break-word执行断行的对象只是VERY类单词，即长度超过了盒子宽度的单词。其对WORD类单词没有影响。而且其对VERY类单词也是另起一行再断行。</p>
+<h2>总结</h2>
+<P>其实从两个属性的单词意义上也可以看个大概。word-break是纯粹的单词断行，word-wrap是对已经长到需要wrap的单词处理。因此word-wrap只适用于非常特殊的情况，即VERY类超长单词。</P>
+<p>所以说，日常的话，我们使用word-break属性就可以基本达到我们想要的单词断行与否的效果啦！</p>

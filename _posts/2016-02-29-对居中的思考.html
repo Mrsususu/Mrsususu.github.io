@@ -1,0 +1,87 @@
+---
+layout: article
+title:  "对居中的思考"
+date:   2016-02-29
+author:  lishu
+categories: 前端技术
+---
+
+<p>居中的问题是css中常见的问题，这边从三个需求角度分别来讨论。即单纯水平居中、单纯垂直居中以及水平垂直双居中。</p>
+<!--brief-->
+<p>对于三种居中需求，其实都有很多种解决方法，我把一些方案分类总结一下，同时也会探讨其浏览器兼容性，用于以后实际项目中便于查阅。</p>
+<p>由于方法比较多，这边不再用实际代码案例演示，只是做一个简洁文字的总结，用于提供一些思路。</p>
+<p>以下方案都是实现在父元素中居中子元素。</p>
+
+<!-- ******单纯水平居中****** -->
+<h2>单纯水平居中</h2>
+
+<h3>盒子相关方法</h3>
+<p>其实用盒子类相关方法来描述并不是很恰当，但我又找不到比较好的描述词。其实这类方法是元素在块级（或者inline-block）层面做一个操作。</p>
+<p>这类方法其实应该按子元素自身的特性来处理，比如&ltinput&gt和&ltimg&gt就为inline-block元素，可采用下面的方案二。</p>
+<p class="em">方案一：</p>
+<p>设置子元素为block元素，同时子元素设置了width。此时对子元素采用margin:0 auto，即可实现水平居中。</p>
+<p class="em">方案二：</p>
+<p>设置子元素为inline-block元素，同时设置父元素上内容居中text-align:center即可。</p>
+
+<h3>table类方法</h3>
+<p>table表现上非常像一个block元素，不同点是其宽度为内容大小。将子元素设置为display:table，此时不需要设置元素宽度（对比“盒子相关方法”的方案一），再对子元素采用margin:0 auto，即可实现水平居中。</p>
+
+<h3>绝对定位方法</h3>
+<p>绝对定位绝对是布局中偷懒的利器，由于其脱离了文档流，所以操控特别自由。当然其也存在问题，就是代码的可维护性和可读性不强。不过在一些固定局部模块里，绝对定位真的还是很好的工具。</p>
+<p class="em">方案一:</p>
+<p>父元素相对定位，子元素绝对定位。再设置子元素left:50%加上margin-left:-width/2。</p>
+<p class="em">方案二：</p>
+<p>思路和方案一类似。父元素相对定位，子元素绝对定位。再设置子元素left:50%加上transform:translateX(-50%)。</p>
+<p>这边由于transform是css3中的属性，所以存在对于ie678不兼容的问题。</p>
+<p class="em">方案三：</p>
+<p>父元素相对定位，子元素绝对定位。再设置子元素top:0,bottom:0，同时设置其margin:auto。</p>
+
+<h3>flex方法</h3>
+<p>弹性布局在布局中也是功能强大的存在，虽然ie9下兼容性不行，但是已经是瑕不掩瑜了。</p>
+<p>当然，还有一点要注意的是对父元素执行弹性操作时，其有效作用对象为在文档流中的直接子元素。并且子元素（除了position:absolute或fixed）无论是display:block或者display:inline，都成为了伸缩项目，即宽度为内容宽度。</p>
+<p>同时注意，justify-content设置的为主轴方向的对齐方式；align-items设置的是辅轴上的对齐方式。</p>
+<p class="em">方案一：</p>
+<p>父元素设置display:flex,justify-content:center，即可实现水平居中。</p>
+<p class="em">方案二：</p>
+<p>父元素设置display:flex，子元素设置margin:0 auto（由于内容伸缩，性质类似于“盒子相关方法”的方案一），即可实现效果。</p>
+
+<!-- *******单纯垂直居中***** -->
+<h2>单纯垂直居中</h2>
+<h3>特殊情况</h3>
+<p>一般如果单行文本的居中，我们直接设置子元素line-height等于父元素的height即可实现单行的居中，这个是很简单实用的方法。</p>
+
+<h3>table类方法</h3>
+<p>这边需要留意的是，display:table时，元素会作为块级表格来显示；display:table-cell时元素会作为一个表格单元格显示。</p>
+<p>父元素设置display:table-cell以及vertical-align:middle，即可实现垂直居中。</p>
+
+<h3>绝对定位方法</h3>
+<p>从绝对定位角度，垂直居中和水平居中本质上没有太大差别，所以这边不再赘述。</p>
+<p>单纯水平居中的“绝对定位方法”里的三种方案在这里都可以采用，只需要将水平维度的偏移改为垂直维度的就好。</p>
+
+<h3>flex方法</h3>
+<p>和水平居中的flex方法也是类似。</p>
+<p class="em">方案一：</p>
+<p>“flex方法”中方法一的主轴处理改为辅轴处理即可，即父元素设置display:flex,align-items:middle，即可实现垂直居中。</p>
+
+<!-- ******水平垂直双居中****** -->
+<h2>水平垂直双居中</h2>
+<p>对于双居中，其实就是对上面两类居中的整合。</p>
+<h3>盒子相关方法</h3>
+<p>父元素设置子display:table-cell,text-align:center,vertial-align:middle，子元素设置为inline-block元素，即可。</p>
+
+<h3>绝对定位方法</h3>
+<p class="em">方案一:</p>
+<p>父元素相对定位，子元素绝对定位。再设置子元素left:50%,top:50%，加上margin-left:-width/2,margin-top::-height/2。</p>
+<p class="em">方案二：</p>
+<p>父元素相对定位，子元素绝对定位。再设置子元素left:50%,top:50%，加上transform:translate(-50%,-50%)。</p>
+<p>这边由于transform是css3中的属性，所以存在对于ie678不兼容的问题。</p>
+<p class="em">方案三：</p>
+<p>父元素相对定位，子元素绝对定位。再设置子元素top:0,bottom:0，同时设置其margin:auto。</p>
+
+<h3>flex方法</h3>
+<p>父元素设置display:flex,justify-content:center,align-items:middle，即可。</p>
+
+<h3>浏览器兼容性总结</h3>
+<p>“盒子相关方法”兼容性好，display:table-cell和display:inline-block在ie67下不支持，可以用table标签和display:inline,zoom:1替代。</p>
+<p>“绝对定位方法”采用mragin移位的兼容性好，采用transform移位的在ie678不兼容。</p>
+<p>“flex方法”在ie9以下不支持。</p>

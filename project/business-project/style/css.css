@@ -1,0 +1,155 @@
+/*css.css*/
+
+body,ul,ol,p,h1,h2,h3,h4,dl,dd,form,input,textarea,select { padding: 0; margin: 0; font-family: arial; }
+li { list-style: none; }
+img { border: none; }
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+body { background:#fff url(../images/body_bg.png) repeat-x;} /*注意此处背景需要多添加一个#fff，用于避免浏览器自带背景颜色，影响透明背景效果*/
+
+#top { width:960px ; height:30px ; margin: 0 auto; }
+
+.top_menu { float: left; }
+.top_menu ul {}
+/*图片位置处于右边顶边缘，图片右边缘到本li文字的距离是19px，所以左填充padding-right;右边缘到下一个li文字的距离是15px，所以左填充maigin-right*/
+.top_menu li { float: left; background: url(../images/top_ico.png) no-repeat right 14px; font-size: 13px; line-height: 30px; padding-right: 19px; margin-right: 14px; }
+.top_menu a { color: #c0c0c0; }
+.top_menu a:hover { color: #fff; }
+.top_menu .no_dot { background: none; padding: 0; margin: 0;} /*不设置padding和margin为0的话top_menu和top_bar总长度大于页面横向长度，此时top_bar位置会到下一行进行右浮动了*/
+
+.top_bar { float: right; }
+/*有了height之后就可以正常显示图片,不然图片显示异常*/ /*图片位置处于左边顶边缘，图片宽30px，图片右边缘到文字的距离又是8px，所以是右填充，使用padding-left:38px。*/ /*增加需求，两个li盒子之间有距离，所以直接改为padding。再改，因为后面两个li之间距离不需要这么大，所以将这个改变添加到phone和help的li元素上就可以了,以免top_bar长度又过长*/
+.top_bar li { float: left; height: 30px; color: #fff; font-weight: bold; font-size: 13px; line-height: 30px; }
+.top_bar .phone { background: url(../images/top_ico.png) no-repeat 8px -16px; padding: 0 38px; } /*调节background-position的第一个参数，可以使得电话图标靠近本li文字，此处调整为8px*/
+.top_bar .help { background: url(../images/top_ico.png) no-repeat 0 -46px; padding: 0 38px; }
+.top_bar .help a { color: #fff; }
+.top_bar .space { margin-right: 12px; } /*图标间的间隔，建议设置margin而不是padding。因为设置padding后可能凌空点也能感应链接，即出现手型点击符号。因为a标签在这个class里面，且（a感应区为border内）（()内为时猜想的，应该是这样）。*/
+
+
+#header { width: 960px; height: 100px; margin: 0 auto; position: relative; background: url(../images/header_bg.png);}/*这个position是为#header h1提供的*/
+
+#shopping { width: 260px; height: 100px; background: url(../images/shopping_bg.png) no-repeat; position: relative; } /*这个position是为#shopping a提供的*/
+#shopping p { color: #f7f7f7 ; font-size: 20px; font-family: Arial; padding: 30px 0 0 84px; }
+#shopping a { display: block; width: 114px; height: 23px; background: url(../images/shopping_bg.png) no-repeat 0 -100px; position: absolute; top: 63px; left: 104px; font-size: 15px; color: #ffc200; text-align: center; line-height: 23px; text-decoration: none; }/*position: absolute;进行绝对定位后，再设置top/left为图片位置*/ /*此处text-decoration为何要再次设置，我也很疑惑？？*/
+#shopping a:hover { color: #ffe388; }
+
+#header h1 { width: 238px; position: absolute; top: 0; left: 50%; margin-left: -119px; }/*图片尺寸为238*100，margin-left=-238/2=-119*/ /*此处不需要设置height: 100px; 了，为什么？*/
+
+#header .search { top: 34px; right: 0; } /*和没有加#header的几个.search类比，是由于下面几个是全局性的，后面也有相同的search框需要这样的样式。而这里的话要做header处这个search的定位，所以需要加上header选择器*/ /*同时，由于search已经下面是绝对定位了，所以直接设置位置就可以了？？？*/
+.search { width: 292px; height: 31px; background: url(../images/search.png) no-repeat; position: absolute; } /*实际搜索框的大小*/
+.search .text { position: absolute; top: 0; left: 20px; width: 230px; height: 30px; background: none; border: none; font-size: 13px; color: #666; outline: none; } /*height可以自己设置，用于表示form的text区域高度，必须要进行设置*//*此处使用绝对定位，其实也可以用float:left*/ /*form的“text"默认自带边框和背景，要去除掉*/ /*由left: 0; width: 250px;改为left: 20px; width: 230px;也就是使得一开始默认显示的“Search Website”文字不是顶着背景开始写*/ /*outline: none;是由于chrome下默认会添加一个框，需要把这个框去掉*/
+.search .btn { position: absolute; top: 0; right: 0; width: 42px; height:30px; background: none; border: none; }
+
+#nav { width: 960px; height: 36px; padding-top: 8px; margin: 0 auto; } /*原来只有height: 44px;的，后来添加padding-top: 8px;并减小了height*/
+#nav li { float: left; height: 28px; margin-right: 2px; } /*margin-right: 2px;使得两个图标之间有距离*/
+#nav a { float: left; height: 28px; text-decoration: none; font-size: 16px; color: #fff; font-family: Arial; line-height: 28px; }
+#nav strong { float: left; height: 28px; font-weight: normal; }/*注意按键的左右分别在不同的标签中*/
+#nav span { float: left; height: 28px; padding: 0 16px; }
+
+/*使用群组选择符，使得第一个home处无论何时都有按键。而其他几个只有在hover时候才会有按键出现*/
+#nav a:hover, #nav .active a { background: url(../images/nav_active_bg.png) repeat-x 0 -56px; } /*移动到按键上发生变化，所以将按键作为background添加到a上。这时候移到这个按键图标上就会发生a的变化了。*/ /*平铺的是中间重复的部分*/
+#nav a:hover strong, #nav .active strong { background: url(../images/nav_active_bg.png) no-repeat; }
+#nav a:hover span, #nav .active span { background: url(../images/nav_active_bg.png) no-repeat right -28px; }
+
+#content { width: 1000px; margin: 24px auto 10px; background: url(../images/content_bg.png) repeat-y -1000px 0; }
+#content_top { width: 1000px; background: url(../images/content_bg.png) no-repeat; }
+#content_bottom { width: 1000px; background: url(../images/content_bg.png) no-repeat -2000px bottom; padding-top: 10px;} /*原来此处的padding-top是没有的，添加在#ad的top，但是#ad的top由于是relative的相对布局，其偏移是相对于relative元素本身自己的，所以实际文档流中#main和#ad会有重合。而这里设置padding-top则不会有新问题。*/
+
+#ad { width: 940px; height: 300px; position: relative; margin: 0 auto; } /*用于定位的最外边盒子，大小先撑开*/
+#ad ul, #ad li, #ad p, #ad h2 { position: absolute; z-index: 1; } /*ul和li都加absolute定位。ul定位是因为h2和p都压在它的上面，定位是层级关系的体现；而li定位是因为后面会有同级的li添加，后面同级的li是压在这个li上面的，所以这也是一个层级关系的体现。虽然两个都是定位，但是对应的需求是不一样的。*/
+#ad ul { left: 0; top: 0;}
+#ad li { left: 0; top: 0;}
+#ad h2 { left: 0; bottom: 0; z-index: 3; width: 268px; font-size: 25px; color: #ffc600; font-family: Arial; text-align: center; line-height: 52px;} /*设置left为0，然后设置宽度固定，再将内容text-align: center，因为这部分是后面可以修改文字内容的，这样的设计方案可以保证文字内容总能比较理想地显示*/ /*注意bottom的设置，因为当bottom为0的时候，其实字体和下边沿也是还有一定高度的（也就是默认行高），所以bottom的值不用测量而是自己估计调节就可以了。这里我自己修改了方案，bottom定位0然后设置行高，原因是不同浏览器默认行高不一样，为了保证正常显示，这里采用设定行高的方法*/
+#ad p { left: 268px; bottom: 7px; z-index: 3; width: 630px; line-height: 16px; color:#fcc; font-size:13px;} /*测量行高，使用的是从上一行最下面测量到下一行最下面*/ /*bottom是*/
+#ad .bg { width: 940px; height: 52px; position: absolute; left: 0; bottom: 0; background-color: rgba(0,0,0,0.8); z-index: 2;}
+
+#main { width: 924px; margin: 0 auto; padding-top: 30px; } /*注意margin有上边缘合并的属性，所以一般内外盒子上下的距离我们采用padding-top设置*/
+#side { width: 210px; float: left; } /*两个浮动框的宽都要写好，这个宽直接从图中测量，也是一个布局的基础*/
+#wrap { width: 706px; float: right; }
+
+.clearfix:after { content: "."; display: block; clear: both; height: 0; overflow: hidden; visibility: hidden;}
+.clearfix { zoom: 1;} /*注意，该class所在级有宽的情况下不用，没有宽的情况下需要写*/
+/*常用代码border: 2px solid;*/
+
+.module_menu { margin-bottom: 12px; }
+.module_menu h2 { height: 29px; background: url(../images/module_menu_bg.gif) repeat-x 0 -58px; line-height:28px; text-align:center; font-size:15px; color:#fff; margin-bottom:1px; }
+.module_menu h2 strong { height: 29px; display: block; background: url(../images/module_menu_bg.gif) no-repeat;}
+.module_menu h2 span { height: 29px; display: block; background: url(../images/module_menu_bg.gif) no-repeat right -29px;}
+
+.list { background: url(../images/list_bg.gif) repeat-y; }
+.list ul { background: url(../images/list_bg.gif) no-repeat -210px bottom; padding:18px 8px 15px; } /*和外边缘(也就是list框)的距离在这里用padding设置*/
+.list li {} /*其实并不需要*/
+.list a { display: block; height:27px; line-height:27px; border-bottom:1px solid #fff; color:#434343; text-decoration:none; font-weight:bold; font-size:12px; padding-left:32px; } /*因为存在a是否hover会有字体颜色变化，所以字体的一些属性就设置在a上*/ /*一行内字体间距问题在这里设置*/ /*因为此处需要设置a的高度，所以需要先将inline的a改变为block*/
+.list a:hover { color:#b20e00; border-bottom:1px solid #b20e00; background:#fae191; text-decoration:none;}
+
+.module_join { width: 210px; background: url(../images/list_bg.gif) repeat-y -630px 0; }
+.module_join_t { width: 210px; background: url(../images/list_bg.gif) no-repeat -420px top; }
+.module_join_b { width: 210px; background: url(../images/list_bg.gif) no-repeat -840px bottom;}
+
+.join_form { width: 180px; margin: 0 auto 12px; }
+.join_form p { font-size:15px; color:#666; line-height:18px; padding: 12px 0; }
+.join_form .text { width: 175px; height: 25px; line-height: 25px; background: #fff; border: 1px solid #fff; border-top: 1px solid #9c9c9c; border-left:1px solid #c0c0c0; margin-bottom: 6px; }
+.join_form .btn { width: 88px; height:25px; border: none; font-size:15px; color:#fff; font-weight:bold; background: url(../images/shopping_bg.png) no-repeat 0 -145px; margin: 0 auto; display: block; }
+
+
+.join_list { width: 192px; background: url(../images/shopping_bg.png) no-repeat 0 -170px; margin: 0 auto; }
+.join_list li { border-top: 1px solid #fff; padding-left:62px; color:#434343; font-size:13px; }
+
+.space1 { height:45px; line-height:45px; }
+.space2 { height:38px; padding-top:5px; line-height:18px; } /*注意行高的真正取值，注意padding的添加*/
+.space3 { height:45px; padding-top:5px; line-height:18px; }
+
+#payment { margin: 33px 0 0 18px; } /*一般如果直接div里面一个图片，考虑到图片其实是位于div盒子的content中，所以可以设置margin或者padding取其一就好，均可达到期望效果。而且因为上面的盒子没有设置下margin，所以不会有margin合并的问题。*/
+
+.sort { height: 20px; } /*设置height目的是兜住里面的内容，之所以要兜住，是为了以后设置padding和margin方便。还有一种可以起到同样效果的方法是在父模块设置清除浮动，前面已经写了，class="clear"*/
+.sort dl { float: left; }
+.sort dt { float: left; font-size: 12px; color: #747474; font-weight: bold; padding-right: 2px; }
+.sort dd { float: left; position: relative; margin-right: 12px; } /*此处暂时先不设置宽高，源代码里是设置了宽高的？？*/
+.sort h2 { width: 108px; height: 17px; border: 1px solid #ccc; font-size: 12px; color: #747474; font-weight: normal; line-height: 17px; text-indent: 5px; }
+.sort a { position: absolute; top: 0; left: 90px; width: 19px; height: 19px; background: url(../images/shopping_bg.png) no-repeat 0 -376px; z-index: 2; } /*插入背景图片，为在一个大图中截取的一个图，此处设置好图片宽高。和前面#shopping a 的设置类似。*/ /*!!注意，添加float后，其自动变为inline-block，所以可以设置宽高*/ /*注意其为绝对定位，所以要设置其父元素<dd>为相对定位*/ /*a的作用是点击后下拉按钮后显示下面的菜单*/
+.sort a:hover { background: url(../images/shopping_bg.png) no-repeat -19px -376px;} /*position: absolute; top: 0; left: 90px; width: 19px; height: 19px; 这部分不需要再添加，因为hover也继承了a原来的属性，同a相比只是修改了background的值，故只需要写上修改的值就可以了*/ /*对ul做display:none，使其暂时不显示，等到js时候再显示*/
+.sort ul { width: 108px; border:1px solid #ccc; background:#fff; position: absolute; top: 18px; z-index: 1; display: none; } /*ul也要设置宽和定位方式，虽然我觉得这里ul不定位也没有关系。视频里说ul一般设置相对定位。*/ /*top由19px改为18px，就是为了使得上下重叠一下，以免边框太粗.同时这样设置了以后，调节a和ul的图层z-index，使得ul的上边在a的下面*/
+.sort li { font-size: 12px; line-height: 20px; color: #747474; text-indent: 5px; cursor: pointer; } /*cursor为鼠标移过去后的显示*/
+.sort .active { background: #099; color: #fff; }
+.sort p { float: right; color: #747474; font-size: 12px; }
+.sort p strong { color: #999; }
+.sort p span { padding: 0 5px; }
+.color_style { color:#b20e00; } /*页面号字体颜色的变化*/
+
+.pic_list { width:706px; overflow:hidden; } /*wrap为宽度为706px,其为这个pic_list实际宽度。这里需要设置溢出部分隐藏。*/
+.pic_list h2, .scroll_list h2 { height: 56px; line-height: 62px; overflow: hidden; font-size: 18px; color: #666; } /*其上面一个模块高度为20px,所以测量上面模块最上面下20px到product图片最上面距离为56px，设置为height，然后用line-height和overflow配合，移动这个字体的位置。当然，用padding也可以测量实现同样功能。*/
+.pic_list ul { width: 736px; } /*width:184（后来微调整为182）*4=px; 需要包住后面的四个模块，使得不会由于宽度为上级宽度而使一行只有3个模块。*/ /*注意这边的宽高设置，宽高其实就是可以设置为一个product模块的实际高度。*/
+.pic_list li { float: left; width: 182px; height: 200px; } /*width:182px; 包含了右侧空白的区域，即为实际一个小product模块的大小*/
+.pic_list a { display: block; width: 154px; height: 114px; border: 1px solid #c6c6c6; margin-bottom: 6px; } /*注意，a内嵌套img，实际a如果没有设置宽高和其他display的话，其为inline元素，宽高没有被撑开。且其底部和img底部有一段间隙，这个是由baseline导致的*/ /*如果对其加float:left，则a脱离了li的文档流，那么下面的h3会占据a原有的空间，又因为内容不脱离文档流，所以h3盒子的高度是在a的高度上再增加h3原来文本的高度*/
+.pic_list a:hover { border: 1px solid #663; }
+.pic_list img {}
+.pic_list h3 { font-size: 15px; color: #666; line-height: 16px; } /*必须设置一下行高，因为有默认行高存在*/
+.pic_list p { font-size: 13px; color: #333; line-height: 16px; } /*必须设置一下行高，因为有默认行高存在*/
+.pic_list span { font-size: 13px; color: #b20e00; }
+
+.page { text-align: center; border-bottom: 1px solid #cdcdc8; padding-bottom: 5px; }  /*此处不能用margin: 0 auto; 来进行内部的居中（就算用也要用在其内部元素中）！！因为里面直接包的是一系列a，都是行内元素，所以应该用text-align进行居中。如果内部包的为块级元素，那才需要用margin来实现，而且margin要用在内部元素上。*/
+.page a { display: inline-block; height: 20px; line-height: 20px; padding: 0 8px; color:#b20e00; font-size: 12px; text-decoration: none; } /*因为数字可能一位也可能两位多位，所以设置每个数字所在盒子的高一定，两边距离使用padding来实现。要设置宽高，故需要对这个inline元素设置inline-block。*/
+.page a:hover, .page .active { color: #fff; background: #b20e00; } /*前面设置了每个数字的盒子，这里设置hover的时候盒子中字体颜色和背景都发生变化*/
+.page span { font-family:'宋体'; } /*最后两个箭头像是宋体，所以特别设置一下*/
+
+.scroll_list .scroll_wrap { height: 196px; background: url(../images/scroll_bg.gif) repeat-x 0 -478px; }
+.scroll_list .scroll_wrap_l { height: 196px; background: url(../images/scroll_bg.gif) no-repeat 0 -86px; }
+.scroll_list .scroll_wrap_r { height: 196px; background: url(../images/scroll_bg.gif) no-repeat right -282px; position: relative; } /*父级设置定位，因为下面两个按钮需要定位*/
+
+.prev, .next { position: absolute; top: 70px; width:35px; height:43px; } /*因为设置了position为absolute，所以a变为了block元素，a可以设置宽高了*/
+.prev { left: 0; background: url(../images/scroll_bg.gif) no-repeat; } /*以背景的形式进行设置*/
+.next { right: 0; background: url(../images/scroll_bg.gif) no-repeat 0 -43px; }
+
+.list_wrap { width:615px; margin: 0 auto; padding-top: 32px; }
+.list_wrap ul { height: 150px; } /*如果要使得最外层class为list_wrap的div包住内部元素，则必须给ul设置高*/
+.list_wrap li { float: left; width:205px; }
+.list_wrap a, .list_wrap p { width:145px; margin: 0 auto; } /*比较a和li的宽度，可以发现其实a是相对于li居中的*/ /*注意此处的margin居中布局*/
+.list_wrap a { display: block; height: 100px;}
+.list_wrap p { line-height:14px; padding-top:10px; font-size:12px; color:#600; text-align:center; }
+
+#footer { width:920px ; height:200px ; margin: 0 auto; background: url(../images/footer_bg.png) repeat-x;padding: 20px;}
+#footer .item {float:left;margin-right: 75px;}
+#footer .item li {font-size: 13px; color: white; line-height: 20px;}
+#footer .item li a {color: white;font-weight: normal;}
+#footer .item li:first-child {font-size: 15px; font-weight: bold;padding: 10px 0 20px 0;}
