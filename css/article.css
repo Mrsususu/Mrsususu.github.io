@@ -64,6 +64,7 @@ body {background-color:#ececec;}
 .m-articleContent a:hover {color:#000;}
 .m-articleContent .em {font-weight:bold;}
 .m-articleContent .cl {color:red;}
+.m-articleContent .img-center {display:table;margin:0 auto;}
 
 /* 脚步 */
 .g-ft {width:100%;}
