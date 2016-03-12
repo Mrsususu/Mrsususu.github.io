@@ -17,13 +17,25 @@
 				<li><a href="{{ site.baseurl }}/">Home</a><div class="main-triangle"></div></li>
 
 				{% for category in site.categories %}
-				<li><a href="#">{{ category.first }}</a><div class="main-triangle"></div>
+
+				{% if page.categories.first == category.first %} <!-- 当面页面为所选分类，则本类高亮 -->
+				<li><a href="#">{{ category.first }}</a><div class="main-triangle triangle-bottomright"></div>
 					<ul class="m-subNav">
 						{% for post in category.last %}
 			        	<li><div class="sub-triangle"></div><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
 			            {% endfor %}
 	        		</ul>
 				</li>
+				{% else %}
+				<li><a href="#">{{ category.first }}</a><div class="main-triangle"></div>
+					<ul class="m-subNav">
+						{% for post in category.last %}
+			        	<li><div class="sub-triangle"></div><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+			            {% endfor %}
+	        		</ul>
+				</li>				
+				{% endif %}
+
 				{% endfor %}
 
 				<li><a href="{{ site.baseurl }}/about">About</a><div class="main-triangle"></div>
