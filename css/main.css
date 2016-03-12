@@ -68,7 +68,11 @@ body {background-color:#ececec;}
 .g-bd .g-content ul li {float:left;margin:0 20px 20px 0;}
 .g-bd .g-content ul li a {display:block;float:left;position:relative;width:280px;height:200px;background-color:#00ccff;}
 .g-bd .g-content ul li a.active {background-color:#1a1a1a;}
-.g-bd .g-content ul li a span {display:block;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:51px;height:50px;background:url(../img/icon.png) no-repeat 0 -40px;}
+.g-bd .g-content ul li a span {display:block;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:51px;height:50px;}
+.g-bd .g-content ul li a span.technology {background:url(../img/icon.png) no-repeat 0 -40px;}
+.g-bd .g-content ul li a span.lifestyle {background:url(../img/icon.png) no-repeat -51px -40px;}
+.g-bd .g-content ul li a span.reading {background:url(../img/icon.png) no-repeat -102px -40px;}
+.g-bd .g-content ul li a span.project {background:url(../img/icon.png) no-repeat -153px -40px;}
 .g-bd .g-content ul li .articleItem {float:left;padding:8px 28px;width:240px;height:180px;background-color:#fff;border:2px solid #fff;cursor:pointer;}
 .g-bd .g-content ul li div.active {border-color:#1a1a1a;}
 .g-bd .g-content ul li .articleItem h2 {height:36px;border-bottom:1px solid #dedede;line-height:36px;}

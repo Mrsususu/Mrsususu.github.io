@@ -1,0 +1,34 @@
+---
+layout: article
+title:  "元素大小详细分析"
+date:   2016-03-02
+author:  lishu
+categories: 前端技术
+---
+
+<p>之前写过瀑布流的布局，里面涉及很多对元素高度、相对偏移量、页面可视区、滚轮偏移量的获取。本文考虑从js和jQuery两个角度对这些高度做一个汇总，以便以后查阅。</p>
+<!--brief-->
+<h2>元素大小及偏移量分类</h2>
+<p>先将这些长度数据做一个分类。准备从<em>大小维度</em>和<em>偏移量维度</em>来进行讨论。</p>
+<p>又由于大小维度height和width类似，偏移量维度top和left类似，所以以下仅标注大小维度的height以及偏移量维度的top。</p>
+<p>在js中这些值的获取一般通过元素内置的属性来取得，而jQuery中一般采用响应的方法来获取。</p>
+<h3>大小维度</h3>
+<p>元素自身大小：js用element.offsetHeight属性获取，jQuery用$element.outerHeight()方法获取。</p>
+<p>窗口可视区大小：js用document.documentElement.clientHeight属性获取，jQuery用$(window).height()方法获取。</p>
+<p>滚轮存在时，实际文档大小：js用document.documentElement.scrollHeight属性获取，jQuery用$(document).height()方法获取。</p>
+<h3>偏移量维度</h3>
+<p>相对实际文档对象的偏移：js用element.offsetTop属性获取，jQuery用$element.offset().top方法获取。</p>
+<p>滚动条拉动的偏移量：js用element.scrollTop属性获取，jQuery用$element.scrollTop()方法获取。</p>
+
+<h2>大小值与盒模型的关系</h2>
+<p>对上面取到的各个值详细分析，看它们在盒模型中具体占了哪些大小。</p>
+<h3>js</h3>
+<p>offsetHeight = height + padding + border</p>
+<p>clientHeight = height + padding</p>
+<p>scrollTop = (height + padding)的外部区域到顶部的距离</p>
+<h3>jQuery</h3>
+<p>height():框的高度（不包含内外边距和边框）。</p>
+<p>innerHeight():框的高度加上内边距。</p>
+<p>outerHeight():框的高度加上内边距和边框。</p>
+<p>outerHeight(true):框的高度加上内外边距和边框。</p>
+

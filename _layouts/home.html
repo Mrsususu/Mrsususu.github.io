@@ -77,7 +77,17 @@
 
 					{% for post in paginator.posts %}
 					<li>
-						<a href="{{ site.baseurl }}{{ post.url }}"><span></span></a>
+	
+						{% if post.categories.first == "前端技术" %}
+						<a href="{{ site.baseurl }}{{ post.url }}"><span class="technology"></span></a>
+						{% elsif post.categories.first == "个人生活" %}
+						<a href="{{ site.baseurl }}{{ post.url }}"><span class="lifestyle"></span></a>
+						{% elsif post.categories.first == "前端阅读" %}
+						<a href="{{ site.baseurl }}{{ post.url }}"><span class="reading"></span></a>
+						{% elsif post.categories.first == "项目练习" %}
+						<a href="{{ site.baseurl }}{{ post.url }}"><span class="project"></span></a>
+						{% endif %}
+
 						<div class="articleItem">
 							<h2>{{ post.title }}</h2>
 							<div class="articleBrief">{{ post.excerpt }}</div>
