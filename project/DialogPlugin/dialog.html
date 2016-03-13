@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery dialog plugin</title>
+	<link rel="stylesheet" type="text/css" href="dialog.css">
+</head>
+<body>
+	<div class="dialog">
+		<div class="mask"></div>
+		<div class="popup">
+			<h2></h2>
+			<span class="dialog-close">×</span>			
+			<p></p>
+		</div>
+	</div>
+
+	<input type="button" id="btn" value="click me">
+
+
+	<script src="jquery-1.11.2.min.js"></script>
+	<script src="dialog.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('#btn').click(function(){
+				$('.dialog').popupBox({
+					width: 500, //弹出层宽度
+		 			height: 250,  //弹出层高度
+		 			title: '我是弹窗标题',  //标题内容
+		 			content: '我是内容！'  //正文内容
+				});
+			});
+
+		})
+	</script>
+</body>
+</html>
