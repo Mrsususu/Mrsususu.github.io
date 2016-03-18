@@ -1,0 +1,29 @@
+---
+layout: article
+title:  "圣杯与双飞翼"
+date:   2016-03-18
+author:  lishu
+categories: 前端技术
+---
+
+<p>两边定宽中间自适应的三列布局中，圣杯布局和双飞翼布局是很有代表性的案例，本文探讨的就是这两个布局方案。</p>
+<!--brief-->
+
+<p>圣杯布局(Holy Grail of Layouts)是Kevin Cornell在2006年提出的一个布局模型概念，而双飞翼淘宝UED提出的一个对圣杯布局的改进方案。这两种布局方案针对的问题都是三列布局问题，两边定宽，中间宽度自适应。</p>
+
+<h2>圣杯布局</h2>
+<h3>实现过程</h3>
+<p>网上的资料很多，具体参考这篇<a href="http://www.cnblogs.com/tinyphp/p/4742922.html" target="_blank">圣杯布局实现过程</a>，个人觉得已经讲得很清晰了。</p>
+<h3>归纳</h3>
+<p>总的来说，该需求的前提是，需要将main部分放置在html代码的最上方(便于SEO)，然后才是left和right部分。</p>
+<p>实现的步骤简单说就是，第一，三列都浮动；第二，main列宽度100%用于自适应效果；第三，设置left和right列的负margin；第四，给三列外层盒子添加padding；第五，left和right列设置relative然后移动到准确位置。</p>
+<p>其中比较关键的部分就是第三步，需要对负margin有比较深入的认识，具体可以看这篇<a href="http://www.cnblogs.com/2050/archive/2012/08/13/2636467.html#2457812" target="_blank">负margin的作用</a>，也是比较细致的介绍。</p>
+<p>而之所以要有第四和第五步，是因为left和right列浮动上去后，会遮盖main列的内容，所以需要调整。</p>
+
+<h2>双飞翼布局</h2>
+<h3>实现过程</h3>
+<p>同样是有很多参考资料，可以参看这篇<a href="http://www.cnblogs.com/tinyphp/p/4742922.html" target="_blank">双飞翼布局实现过程</a>。</p>
+<h3>归纳</h3>
+<p>双飞翼总体来说走的就还是圣杯的思路，但是针对圣杯布局中需要对left和right列设置相对定位relative做了一个改进。因为一旦做了相对定位并且进行了偏移，会对left和right列内部的元素定位产生影响。</p>
+<p>所以双飞翼就是在main列内部再设置一个inner盒子，通过inner的margin设置，替代圣杯布局中第四和第五步起到的作用。</p>
+
