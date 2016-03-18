@@ -1,0 +1,121 @@
+---
+layout: article
+title:  "js六种继承方式分析"
+date:   2016-03-18
+author:  lishu
+categories: 前端阅读
+---
+
+<p>近期由于准备实习的面试，又重翻了《JavaScript高级程序设计》，本文是对红宝书“继承”部分的读后感悟，分析js中各种继承的方法以及其利弊。</p>
+<!--brief-->
+<p>红宝书中的概念细细看还是收获很多的，补了不少基础的概念。继承就是js基础重要的部分，下面简要分析。</p>
+<p>js的继承主要就是分为六种。</p>
+
+<h2>原型链继承</h2>
+<h3>介绍</h3>
+<p>就是子类的原型等于父类的实例，子类就继承了父类。</p>
+<h3>实现方法</h3>
+{% highlight ruby %}
+
+SubType.prototype = new SuperType()
+
+{% endhighlight %}
+<p>注：下文中，子构造函数就是SubType，父构造函数就是SuperType。</p>
+<h3>存在问题</h3>
+<p>子类原型上有了父类的属性，那么子类的实例都会共享这个属性（专门指引用类型属性）。</p>
+
+<h2>借用构造函数继承</h2>
+<h3>介绍</h3>
+<p>针对原型链继承包含引用类型的问题。本方法在子类型构造函数内部调用父类型构造函数</p>
+<h3>实现方法</h3>
+{% highlight ruby %}
+
+function SubType(){
+	SuperType.call(this);
+}
+
+{% endhighlight %}
+<h3>存在问题</h3>
+<p>父类型原型中定义的方法对于子类型而言不可见。</p>
+
+<h2>组合继承(原型链+借用构造函数)</h2>
+<h3>介绍</h3>
+<p>思路是使用原型链实现对原型属性和方法的继承，而通过借用构造函数实现对实例属性的继承。</p>
+<h3>实现方法</h3>
+{% highlight ruby %}
+
+function SubType(){
+	SuperType.call(this); //继承属性（有自己的属性了，属性不复用）
+}
+
+Subtype.prototype = new SuperType();  //继承方法（可以共用方法）
+Subtype.prototype.constructor = Subtype;
+Subtype.prototype.sayAge = function(){}
+
+{% endhighlight %}
+<h3>存在问题</h3>
+<p>会两次调用超类型构造函数。一次是创建子类原型的时候，一次是在子类型构造函数内部。</p>
+
+<h2>原型式继承</h2>
+<h3>介绍</h3>
+<p>思路是，借助原型基于已有的对象创建新对象</p>
+<h3>实现方法</h3>
+{% highlight ruby %}
+
+function object(o){
+	function F(){};
+	F. prototype = o;
+	Return new F();
+}
+
+{% endhighlight %}
+<p>ES5中用Object.create()方法替代</p>
+<h3>存在问题</h3>
+<p>引用类型会共享</p>
+
+<h2>寄生式继承</h2>
+<h3>介绍</h3>
+<p>思路是，在原型继承基础上，该函数内部以某种方式增强对象</p>
+<h3>实现方法</h3>
+{% highlight ruby %}
+
+function createAnother(original){
+	var clone=object(original);
+	clone.sayHi=function(){  //以某种方式增强对象
+		Alert(“hi”);
+	};
+	return clone;
+}
+
+{% endhighlight %}
+
+<h2>寄生组合式继承</h2>
+<h3>介绍</h3>
+<p>组合继承相当于，调用超类型实例构造子类型原型时，子类型原型上就会有超类型的属性（此时引用类型属性为共享），当调用子类型构造函数时，又一次调用了超类型的构造函数，那就有了新的属性，该属性就屏蔽了原型中的两个同名属性。</p>
+<p>思路是，用寄生式继承来继承超类型的原型，然后再将结果指定给子类型的原型。</p>
+<h3>实现方法</h3>
+{% highlight ruby %}
+
+Function inheritPrototype(subType, superType){
+	var prototype = Object(superType. prototype); //创建对象
+	prototype.constructor=subtype; //增强对象
+	subtype. prototype= prototype; //指定对象
+}
+
+{% endhighlight %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
