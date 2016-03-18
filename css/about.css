@@ -57,7 +57,7 @@ body {background-color:#ececec;}
 .g-bd .m-wrap .m-detail .m-item p.highlight {color:#000;}
 .g-bd .m-wrap .m-detail .m-item p.highlight em {font-weight:bold;margin-right:30px;width:122px;display:inline-block;}
 .g-bd .m-wrap .m-detail .m-item p span {display:inline-block;margin-right:20px;margin-left:130px;width:8px;height:8px;background:url(../img/icon.png) no-repeat 0 -176px;}
-
+.g-bd .m-wrap .m-detail .m-item p span.visibility {visibility:hidden;} 
 .g-bd .m-wrap .dialogue-triangle {left:20px;bottom:-10px;}
 
 /* 脚步 */
