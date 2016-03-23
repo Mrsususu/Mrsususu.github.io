@@ -1,0 +1,134 @@
+---
+layout: article
+title:  "gif动画的两种替代方案"
+date:   2016-03-23
+author:  lishu
+categories: 前端技术
+---
+
+<p>本文考虑使用纯js和纯css3的方式实现gif动画的替代效果。</p>
+<!--brief-->
+
+<p>这个需求是昨晚笔试的时候遇到的一个问题，当时答的时候理解得比较粗糙，以为是实现动画效果的两种方式，所以直接就写了canvas和css3，并没有深入去答。考完后自己回顾题目的时候，发现其实题目的关键点还是gif的动画实现，也就是相当于多张图片的循环轮播。</p>
+<p>这样的需求的话其实使用纯js和纯css3就可以比较简易和理想地实现了，所以自己尝试写了一下。关键是在用纯css3动画效果写的时候，遇到一点之前自己理解有误的地方——关于animation-timing-function的真正作用范围，下面也会具体讨论。</p>
+
+<h2>纯js的实现方案</h2>
+<p>js实现的话很简单，就是使用一个定时函数。</p>
+<h3>实现过程</h3>
+<p>这边我准备了5张图表示gif的五个帧（命名为pic1.png ~ pic5.png），实现每1s改变一帧，循环进行。</p>
+<p>思路就是通过定时器设定每1s改变图片的编号即可。大概的代码逻辑意思就是下面这样。</p>
+{% highlight ruby %}
+var i = 0;
+var show = function(){
+		var j = i % 5; 
+		img.src = 'pic' + (j+1) + '.png';
+		i++;
+	}
+setInterval(show,1000);
+{% endhighlight %}
+<!-- {% highlight ruby %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="pic"></div>
+	<script type="text/javascript">
+		var img = document.createElement('img');
+		var box = document.getElementById('pic');
+		var i = 0;
+		box.appendChild(img);
+
+		var show = function(){
+				var j = i % 5; 
+				img.src = 'pic' + (j+1) + '.png';
+				i++;
+			}
+		setInterval(show,1000);
+
+	</script>
+</body>
+</html>
+{% endhighlight %} -->
+<p><a href="/project/gif/js.html" target="_blank">js方案效果演示</a></p>
+<p>写的时候也想了另一个js实现方案，比前面复杂点，思路就是将五帧循环封装为一个函数，然后将这个函数再设定setInterval即可。大概就是下面这样，五帧的自循环用个闭包就可以。</p>
+{% highlight ruby %}
+var show = function(){
+		for(var i = 1; i < 6; i++){
+			(function(j){
+				setTimeout(function(){
+					img.src = 'pic' + j + '.png';
+				},(j - 1)* 1000);
+			})(i);			
+		}
+	}
+setInterval(show,5000);
+{% endhighlight %}
+
+<h2>纯css3的实现方案</h2>
+<p>一开始想的时候觉得用animation，然后每张图片设置一个关键帧就可以了。写了下面的方法：</p>
+
+{% highlight ruby %}
+#pic {width:100px;height:100px;} 
+@keyframes abc{
+	20% {background-image:url(pic1.png)}
+	40% {background-image:url(pic2.png)}
+	60% {background-image:url(pic3.png)}
+	80% {background-image:url(pic4.png)}
+	100% {background-image:url(pic5.png)}
+}
+#pic{animation-name:abc;animation-duration:5s;animation-timing-function:linear;
+animation-iteration-count:infinite;}
+{% endhighlight %}
+<p>可以看测试效果：<a href="/project/gif/css3-1.html" target="_blank">动画效果</a></p>
+<p>可以发现，实际上，上面方案并没有实现我们的需求。首先，帧与帧之间效果是渐变的；其次，最后一帧也没有保持住，直接闪过了。</p>
+<p>所以问题应该出在animation-timing-function。</p>
+<p>再回去看w3school，看到animation-timing-function所有的值：</p>
+<p><img src="{{ site.baseurl }}/img/article/gif01.png" alt="gifExample01"></p>
+<p>发现没有瞬时切换的效果，那就再去查w3c的原文资料，<a href="https://www.w3.org/TR/2012/WD-css3-transitions-20120403/#transition-timing-function-property" target="_blank">w3c规范</a>。</p>
+<p>看了这部分就可以发现，原来还有一个可以实现阶跃效果的step函数。问题可以解决了呢！</p>
+<p>step的第一个参数指定了时间函数中的间隔数量（必须是正整数）。第二个参数可选，接受start和end两个值，指定在每个间隔的起点或是终点发生阶跃变化，默认为end。</p>
+<p>下图为其变化过程：</p>
+<p><img src="{{ site.baseurl }}/img/article/gif02.png" alt="gifExample02"></p>
+<p>既然如此，那如果我设置step的第二个参数是start在每个帧开始就实现阶跃变化，然后设置图片从第一帧开始，那不就可以实现理想效果了么。所以我就把代码改成下面：</p>
+{% highlight ruby %}
+#pic {width:100px;height:100px;} 
+@keyframes abc{
+	0% {background-image:url(pic1.png)}
+	20% {background-image:url(pic2.png)}
+	40% {background-image:url(pic3.png)}
+	60% {background-image:url(pic4.png)}
+	80% {background-image:url(pic5.png)}
+}
+#pic{animation-name:abc;animation-duration:5s;animation-timing-function:step(5,start);
+animation-iteration-count:infinite;}
+{% endhighlight %}
+<p>可以看测试效果：<a href="/project/gif/css3-2.html" target="_blank">动画效果</a></p>
+<p>发现很神奇，帧之间居然还是渐变的转化，而不是阶跃的效果。这是怎么回事呢？</p>
+<p>这时候，再查阅资料，发现自己有一个很大的认识误区，就是我认为animation-timing-function定义的是整个动画的帧之间的效果，然而实际并不是这样！</p>
+<p><em class="em cl">其实animation-timing-function作用于每两个关键帧之间，而不是整个动画。</em></p>
+<p>这点误区导致我前面的方案其实是设置了两个关键帧之间5次阶跃变化，那么显然还是一个过渡的过程。</p>
+<p>搞清楚了这一点，那就可以实现正确的方案了。</p>
+<h3>css3准确实现方案</h3>
+<p>timing-function既然是作用于关键帧之间的，我们只需要将修改steps(5,start)为steps(1,start)，然后调整下起始帧的位置，就可以了！这边注意，steps(1,start)也就等价于step-start。</p>
+<p>所以将代码再次修改：</p>
+{% highlight ruby %}
+#pic {width:100px;height:100px;} 
+@keyframes abc{
+	20% {background-image:url(pic1.png)}
+	40% {background-image:url(pic2.png)}
+	60% {background-image:url(pic3.png)}
+	80% {background-image:url(pic4.png)}
+	100% {background-image:url(pic5.png)}
+}
+#pic{animation-name:abc;animation-duration:5s;animation-timing-function:step-start;
+animation-iteration-count:infinite;}
+{% endhighlight %}
+<p>可以看测试效果：<a href="/project/gif/css3-3.html" target="_blank">准确动画效果</a></p>
+<p>发现顺利实现了gif的效果了！</p>
+
+<h2>总结</h2>
+<p>总的来说，gif动画效果的模拟还是很简单的，js和css3实现都是。</p>
+<p>关键的点还是对animation-timing-function的认识有了改进，了解了steps函数，可以实现阶跃效果；同时明确了timing-function的作用范围，其范围为关键帧之间。</p>

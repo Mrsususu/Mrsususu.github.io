@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="pic"></div>
+	<script type="text/javascript">
+		var img = document.createElement('img');
+		var box = document.getElementById('pic');
+		var i = 0;
+		box.appendChild(img);
+
+		var show = function()
+			{
+				var j = i % 5; 
+				img.src = 'pic' + (j+1) + '.png';
+				i++;
+			}
+		setInterval(show,1000);
+
+	</script>
+</body>
+</html>

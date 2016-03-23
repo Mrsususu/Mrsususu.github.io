@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		#pic {width:100px;height:100px;} 
+		@keyframes abc{
+			20% {background-image:url(pic1.png)}
+			40% {background-image:url(pic2.png)}
+			60% {background-image:url(pic3.png)}
+			80% {background-image:url(pic4.png)}
+			100% {background-image:url(pic5.png)}
+		}
+		#pic{animation-name:abc;animation-duration:5s;animation-timing-function:linear;animation-iteration-count:infinite;}
+
+	</style>
+</head>
+<body>
+	<div id="pic"></div>
+
+</body>
