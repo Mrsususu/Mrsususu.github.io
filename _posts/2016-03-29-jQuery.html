@@ -1,0 +1,27 @@
+---
+layout: article
+title:  "思维导图——jQueryAPI汇总"
+date:   2016-03-29
+author:  lishu
+categories: 前端阅读
+---
+
+<p>本文利用思维导图汇总了jQuery里常用的API。</p>
+<!--brief-->
+
+<p>前几天看了winter大大分享的关于前端个人发展的《一个前端的自我修养》。里面提到了一个前端的成长80%需要的是能力的提升，20%需要的是知识的基础。</p>
+<p>关于知识方面，里面讲到需要构建自己的知识体系，这点的分享对于我这个初学者还是很有帮助的。尤其是其中关于建立知识联系，然后进行分类，觉得对我的学习方式的改进是一个启发。</p>
+<p>说到知识的联系和分类，最常用的工具就是思维导图了。看了winter大大的分享里写了zepto的API分类，自然就自己也准备写一下jQuery的API分类，虽然很类似，不过在整理的过程中也是一个回顾学习。</p>
+<p>图中对几个容易混淆的方法也写了备注说明。</p>
+<p><img src="{{ site.baseurl }}/img/article/jQuery.jpg" alt="jQuery" width="900px" height="1160px" class="img-center"></p>
+
+<h2>一点辨析</h2>
+<p>在绘制这个思维导图的时候，发现自己对于on()、bind()、delegate()、live()的具体用途其实是有混淆的。</p>
+<p>在网上找了一些资料，<a href="http://www.jb51.net/article/67166.htm" target="_blank">jQuery事件绑定on()、bind()与delegate()方法详解</a>以及<a href="http://kb.cnblogs.com/page/94469/" target="_blank">jQuery的bind()、live()和delegate()之间区别</a>。</p>
+<p>归纳来说，主要就是以下几点：</p>
+<p>1、delegate()和live()都是利用了事件委托的概念，即可以有冒泡。对动态添加元素有效。</p>
+<p>2、bind()是直接对元素绑定事件，对动态添加元素无效。</p>
+<p>3、on()相当于前面三种方法的统一，前面的方法在jQuery源码里都是用on()实现的。并且on()有三个参数，中间一个参数可以添加选择器。</p>
+<p>4、元素多时，不要用bind()迭代绑定。</p>
+<p>5、dom树太深时，不要用delegate()和on()，以免冒泡消耗太多时间。</p>
+<p>6、尽量使用on()。</p>
