@@ -1,0 +1,104 @@
+---
+layout: article
+title:  "CSS选择器辨析"
+date:   2016-04-05
+author:  lishu
+categories: 前端技术
+---
+
+<p>本文分析了CSS的几类选择器，同时对一些容易误解的点进行辨析。</p>
+<!--brief-->
+
+<p>CSS选择器按优先级分，大概可以分为三类：第一类是ID选择器，第二类是类、伪类和属性选择器，第三类是标签和伪元素选择器。他们的权重值依次递减。当然，其他还有兄弟选择器，这是另一个维度的分类了。</p>
+<p>这些选择器中，属性选择器因为不常用而使得其属性被忽略，伪类选择器有些用法容易混淆，伪元素选择器由于和伪类选择器名字类似也有混淆。本文主要探讨的就是这三类选择器。</p>
+
+<h2>属性选择器</h2>
+<p>属性选择器主要有以下几个(下文中attr都代表属性)：</p>
+<p>[attr](主要针对于disabled等状态属性)</p>
+<p>[attr=val](筛选的是对应属性的值的对象)</p>
+<p>[attr~=val](属性的值包含val就可以被筛选出，val为以空格为间隔的值)</p>
+<p>[attr|=val](属性的值包含val或者val-就可以被筛选出)</p>
+<p>[attr^=val](属性的值以val开头就可以被筛选出)</p>
+<p>[attr$=val](属性的值以val结尾就可以被筛选出)</p>
+
+<h2>伪类选择器</h2>
+<p>伪类选择器大概可以分为两类，一类是基本类型，一类是稍有特殊的类型。</p>
+<p>基本类型包括用于链接的:link/:visited/:hover/:active以及用于状态表达的:enabled/:disabled/:checked。这些比较简单，不再赘述。</p>
+<p>而稍有特殊的类型，是指一些从父元素角度来筛选的伪类选择器。</p>
+<p>常见的有:first-child/:nth-child/:only-child/:first-of-type/:nth-of-type/:nth-last-of-type/:only-of-type等。</p>
+<p>我们以:first-child和:first-of-type为例进行辨析。</p>
+
+<h3>辨析一</h3>
+<p>使用:first-child时，例如p:first-child，很容易想当然地错误理解为筛选出的是p元素的第一个子元素或者子元素中为p的第一个元素，其实都不是！</p>
+<p>我们可以看以下这个例子，假设html结构如下:</p>
+
+{% highlight ruby %}
+<div>
+	<h1>这是标题</h1>
+	<p>第一个段落。</p> // 希望筛选出此元素
+	<p>第二个段落。</p>
+	<p>第三个段落。</p>
+	<p>第四个段落。</p>
+</div>
+{% endhighlight %}
+
+<p>我们设置样式筛选如下：</p>
+
+{% highlight ruby %}
+div p:first-child { background:#ff0000; // 设此筛选为A }
+{% endhighlight %}
+
+<p>A筛选的结果是：</p>
+<p><img src="{{ site.baseurl }}/img/article/selector01.png" alt="selector01"></p>
+<p>可以发现，我们希望的元素并没有被筛选出。所以理解为“子元素中为p的第一个元素”，是错误的。</p>
+<p>此处，p实际上时父元素的第二个元素了，所以我们应该设置筛选为，第二个子元素。</p>
+
+<p>所以设置样式筛选如下：</p>
+
+{% highlight ruby %}
+div p:nth-child(2) { background:#ff0000; // 设此筛选为B }
+{% endhighlight %}
+
+<p>B筛选的结果是：</p>
+<p><img src="{{ site.baseurl }}/img/article/selector02.png" alt="selector02"></p>
+<p>发现符合我们的要求。</p>
+<p>所以，应该这么理解。p:first-child实际上包含的是两层的筛选功能，首先这个<em class="em cl">元素需要为父元素的第一个子元素</em>，同时，<em class="em cl">这个元素本身必须为p元素</em>。</p>
+<p>还要注意的一点是，:nth-child中，其子元素对象的序号是从1开始的而非从0开始。</p>
+
+<h3>辨析二</h3>
+<p>上面的例子中，使用:first-child不能做出筛选，但其实我们想选的元素是所有p元素中的第一个，有什么好的替代方案呢？这时，:first-of-type就可以一展拳脚了！</p>
+<p>有了上面的辨析，那么:first-of-type就变得容易理解了。其是对子元素某一个类型进行筛选。</p>
+
+<p>设置样式筛选如下：</p>
+
+{% highlight ruby %}
+div p:first-of-type { background:#ff0000; // 设此筛选为C }
+{% endhighlight %}
+
+<p>C筛选的结果是：</p>
+<p><img src="{{ site.baseurl }}/img/article/selector03.png" alt="selector03"></p>
+<p>我们发现，达到了我们想要的效果。</p>
+<p>所以，类比p:first-child，p:first-of-type的作用也是两层的筛选，首先<em class="em cl">筛选出父元素中所有的p元素</em>，然后<em class="em cl">在这些p元素中选择第一个</em>。</p>
+<p>也就说，<em>p:first-child中，first的对象是相对所有子元素</em>；而<em>p:first-of-type中，first的对象是相对已经经过p筛选的子元素</em>。</p>
+
+<h2>伪元素选择器</h2>
+<p>伪元素选择器和伪类选择器听起来很类似，但是其实是不同的概念。两个概念的辨析我谈谈自己的理解，我觉得伪类选择器操作的对象是<em>元素的一些状态以及在文档树中的位置情况</em>，而伪元素是指<em>对具体元素的操作</em>。</p>
+<p>常见的伪元素选择器有如下几个：</p>
+<p><img src="{{ site.baseurl }}/img/article/selector04.png" alt="selector04"></p>
+<p>举个例子，假设html结构如下：</p>
+
+{% highlight ruby %}
+<p>My name is Donald.</p>
+<p><em>My</em> name is Donald.</p>
+{% endhighlight %}
+
+<p>设置样式筛选如下：</p>
+{% highlight ruby %}
+p::first-letter { background:#ff0000; // 设此筛选为D }
+{% endhighlight %}
+
+<p>D筛选的结果是：</p>
+<p><img src="{{ site.baseurl }}/img/article/selector05.png" alt="selector05"></p>
+<p>可以发现，p元素的第一个字母(不论其是否还在其他标签内)，都会被筛选出来。</p>
+<h3>辨析</h3>
+<p>伪类选择器和伪元素选择器的差别，除了前面提到的概念上的不同，在使用上也有不同。CSS3中已经规定，<em>伪元素选择器需要使用两个冒号::</em>，而<em>伪类选择器使用的是一个冒号:</em>。</p>
