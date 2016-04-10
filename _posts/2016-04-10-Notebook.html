@@ -1,0 +1,22 @@
+---
+layout: article
+title:  "在线笔记本"
+date:   2016-04-10
+author:  lishu
+categories: 项目练习
+---
+
+<p>模拟有道云笔记的jQuery项目，实现了一些基本功能。云端采用leanCloud，用于渲染的模板引擎采用Handlebars。</p>
+<!--brief-->
+<p>本项目是使用jQuery写的一个模拟有道云笔记的在线笔记本页面应用，可以实现笔记本的创建删除以及笔记本内笔记的新增。代码尝试了MVC的分割，M主要操作和云端的数据交互，V利用Handlebars模板引擎做渲染工作，C作为控制器下面会详细描述。</p>
+<p>控制器部分是笔记本应用的核心，下面利用思维导图的方式将C部分的功能详细描述。</p>
+<p><img src="{{ site.baseurl }}/img/article/notebook.jpg" alt="notebook" width="900px" height="1160px" class="img-center"></p>
+
+<h2>在线笔记本项目地址</h2>
+<p><a href="/project/notebook/index.html" target="_blank">在线笔记本</a></p>
+<h2>说明</h2>
+<p>1、左边栏为笔记本区，可以执行添加和删除笔记本操作（删除时会有弹窗提醒）。</p>
+<p>2、中间栏为目录区，可以显示选中笔记本里面的文章。目录区可以添加新文章。</p>
+<p>3、右边栏为文章显示区，可以显示目录区选中的文章。当目录区点击添加新文章后，文章区会显示文章编辑页面，按保存键可以保存文章。</p>
+
+

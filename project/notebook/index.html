@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ls's note</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<div id="left">
+		<h1>笔记本</h1>
+		<div class="menu">
+			<span class="add"></span>
+			<span class="delete"></span>
+		</div>
+		<div>
+			<input type="text" class="menuAddNotebook"/>
+			<ul id="notebooks">
+			</ul>
+		</div>
+
+	</div>
+
+	<div id="center">
+		<h1>笔记</h1>
+		<div class="newadd create-essay"><img src="images/writeicon.png"><span>新建笔记</span></div>
+		<ul id="catalogues">
+<!-- 			<li class="selected">
+				<a href="#">				
+					<h2>标题一</h2>
+					<p>内容一</p>
+				</a>
+
+			</li> -->
+		</ul>
+	</div>
+
+	<div id="right">
+		<div class="contain">
+<!-- 			<div class="content-header">
+				<h2>我是标题</h2>
+			</div>
+			<div class="content-page">
+				<p>我是内容</p>
+				<p>我是内容</p>
+			</div> -->
+		</div>
+		<div class="editer" style="display:none">
+			<input class="textname" type="text" placeholder="输入笔记标题"/>
+			<div class="editer-menu">
+				<span class="editerIcon-save"></span>
+				<span class="editerIcon-preview"></span>
+			</div>
+			<div class="editer-textarea" contenteditable="true">			
+			</div>
+		</div>
+
+	</div>
+
+    <div class="modal-frame">
+        <div class="modal">
+            <div class="modal-inset">
+                <div class="button modal-close modal-close-action"><span>X</span></div>
+
+                <div class="modal-body">
+                    <h3 class="modal-title">Such Modal, Much Animate!</h3>
+                    <p class="modal-content">Nothing groundbreaking, but I hope you enjoyed <br /> the physics for the open/close animation =).</p>
+                    <p class="ps"></p>
+                    <button class="modal-btn modal-close-action">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="js/handlebars.js"></script>
+	<script src="https://cdn1.lncld.net/static/js/av-mini-0.6.4.js"></script>
+	
+	<script type="text/javascript" src="js/model.js"></script>
+	<script type="text/javascript" src="js/view.js"></script>
+	<script type="text/javascript" src="js/util.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+</body>
+    <script id="notebookNode-template" type="text/x-handlebars-template">
+        <li class="notebook" data-id="{{id}}"><a href="/notebook/#{{id}}">{{title}}({{numberOfNote}})</a></li>
+    </script>
+    <script id="notebook-template" type="text/x-handlebars-template">
+        {{#each notebooks}}
+        <li class="notebook" data-id="{{id}}"><a href="/notebook/#{{id}}">{{title}}({{numberOfNote}})</a></li>
+        {{/each}}
+    </script>
+    <script id="catalogueNew-template" type="text/x-handlebars-template">
+        <li class="catalogue selected" data-id="">
+        	<a href="#">        	
+        		<h2>{{title}}</h2>
+        		<p>{{paragraphBrief}}</p>
+        	</a>
+        </li>
+    </script>
+    <script id="catalogue-template" type="text/x-handlebars-template">
+        {{#each catalogues}}
+        <li class="catalogue" data-id="{{id}}">
+        	<a href="#">        	
+        		<h2>{{title}}</h2>
+        		<p>{{paragraphBrief}}</p>
+        	</a>
+        </li>
+        {{/each}}
+    </script>
+    <script id="essay-template" type="text/x-handlebars-template">
+		<div class="content-header">
+			<h2>{{title}}</h2>
+		</div>
+		<div class="content-page">
+			<p>{{content}}</p>
+		</div> 
+    </script>    
+</html>
