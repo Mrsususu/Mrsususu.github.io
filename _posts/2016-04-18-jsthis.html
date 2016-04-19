@@ -1,0 +1,121 @@
+---
+layout: article
+title:  "js中的this"
+date:   2016-04-18
+author:  lishu
+categories: 前端阅读
+---
+
+<p>js中this是一个很基础的问题，虽然日常使用时会有意识，但是系统的总结没有做过。最近看《JavaScript语言精粹》（蝴蝶书）的时候，发现里面介绍得很好，本文在这个基础上添加了一些例子来说明这个问题。</p>
+<!--brief-->
+<p>this在面向对象编程中是一个重要参数，它的值取决于调用的模式。</p>
+<p>js中共有4中调用模式：方法调用模式、函数调用模式、构造器调用模式和apply调用模式。这些调用模式在初始化this时很关键，只要分清楚了调用模式，就可以清楚知道this绑定的对象。</p>
+<h2>方法调用模式</h2>
+<p>当一个函数被保存为对象的一个属性时，我们称之为方法。当方法被调用时，this绑定到该对象。</p>
+<p>我们看下面这个例子，先构建一个对象，然后调用其方法：</p>
+{% highlight ruby %}
+
+window.value = 3;
+var myObject = {
+  value: 1,
+  getValue: function(){
+    console.log(this.value);
+  }
+};
+myObject.getValue(); // 1  发现this指向了调用方法的对象myObject
+
+{% endhighlight %}
+<p>显然，此时getValue方法里的函数的this访问的是自己所属的对象myObject。也就是我们常说的，绑定的是调用这个方法的对象。</p>
+
+<h2>函数调用模式</h2>
+<p>当一个函数并非一个对象的属性时，它就被作为一个函数来调用。此时this绑定到全局对象window。</p>
+<p>对上面的例子稍作修改，在getValue方法里再添加一个新函数。</p>
+{% highlight ruby %}
+
+window.value = 3;
+var myObject = {
+  value: 1,
+  getValue: function(){
+    console.log(this.value); // 1 getValue方法内的this依然指向调用方法的对象myObject
+    var compare = function(){
+	  console.log(this.value); // 3 发现compare函数内的this指向了window，
+	}
+	compare();
+  }
+};
+myObject.getValue();  
+
+{% endhighlight %}
+<p>当我们在getValue方法里添加了一个新函数compare，然后直接调用compare时，此时这个compare函数就是作为一个函数来调用的，因此其this绑定到window，结果里也显示了其的确获取的是全局的value值3，而非myObject对象的value值1。</p>
+<p>也就是说，内部函数的this并不是绑定到外部函数this上。一般遇到这个问题时，解决方法就是在外部函数先缓存这个this，这样内部函数就可以从定义它的上下文中获取这个this。</p>
+<p>下面的例子就是这个实现过程，即新定义一个变量赋值为this：</p>
+{% highlight ruby %}
+
+window.value = 3;
+var myObject = {
+  value: 1,
+  getValue: function(){
+    var that = this; // 用一个变量缓存了this
+    console.log(that.value); // 1
+    var compare = function(){ // 本函数可以获取上下文中的that
+	  console.log(that.value); // 1
+	}
+	compare();
+  }
+};
+myObject.getValue();
+
+{% endhighlight %}
+
+<h2>构造器调用模式</h2>
+<p>js中在创建对象时，我们可以采用构造函数的方式。我们需要通过new这个函数来构造一个实例，再用新对象调用函数。</p>
+<p>看下面的例子，我们给一个构造函数定义了实例属性和实例方法，当用new得到myObject的实例newObject时，此时这个新对象newObject内部的this就绑定到了newObject这个对象上。即绑定到实例对象上了。</p>
+{% highlight ruby %}
+
+window.value = 3;
+var myObject = function(value){
+  this.value = value; //实例属性
+  this.getValue = function(){ //实例方法
+    console.log(this); 
+  };
+};
+var newObject = new myObject(1); // 用new构造myObject的一个实例
+newObject.getValue(); // myObject{value:1} 发现this指向了实例对象
+
+{% endhighlight %}
+<p>当然，熟悉继承的小伙伴们都知道，在继承中，方法一般被添加在原型链上为了让所有实例共享方法，一般会把方法添加在原型链上，即上文的方法改写为：</p>
+{% highlight ruby %}
+
+window.value = 3;
+var myObject = function(value){
+  this.value = value; //实例属性
+};
+myObject.prototype.getValue = function(){ // 原型方法（所有实例共有）
+  console.log(this);
+}
+var newObject = new myObject(1); // 用new构造myObject的一个实例
+newObject.getValue(); // myObject{value:1} 
+
+{% endhighlight %}
+<p>发现和上面的结果是相同的。</p>
+<p>总的来说，不管添加的是实例还是原型方法，每次在函数前带上一个new来创建一个实例时，其实就是创建了一个空白对象，this会被绑定到这个新对象上。</p>
+<h2>apply调用模式</h2>
+<p>当然我们还可以通过apply和call来改变this的指向。apply和call差别不大，只是传入参数的差异，因此这边就讨论apply。</p>
+<p>将上面的例子稍作改动，调用myObject的getValue方法，然后用apply改变其this指向：</p>
+{% highlight ruby %}
+
+window.value = 3;
+var myObject = function(value){
+  this.value = value; //实例属性
+};
+myObject.prototype.getValue = function(){ // 原型方法（所有实例共有）
+  console.log(this.value);
+}
+var obj = {
+  value: 2
+};
+myObject.prototype.getValue.apply(obj); // 2 发现this指向了obj
+
+{% endhighlight %}
+<p>上面的代码就完成了this指向的改变。</p>
+
