@@ -38,9 +38,9 @@ var myObject = {
   getValue: function(){
     console.log(this.value); // 1 getValue方法内的this依然指向调用方法的对象myObject
     var compare = function(){
-	  console.log(this.value); // 3 发现compare函数内的this指向了window，
-	}
-	compare();
+	    console.log(this.value); // 3 发现compare函数内的this指向了window，
+	  };
+	  compare();
   }
 };
 myObject.getValue();  
@@ -58,9 +58,9 @@ var myObject = {
     var that = this; // 用一个变量缓存了this
     console.log(that.value); // 1
     var compare = function(){ // 本函数可以获取上下文中的that
-	  console.log(that.value); // 1
-	}
-	compare();
+	    console.log(that.value); // 1
+	  };
+	  compare();
   }
 };
 myObject.getValue();
