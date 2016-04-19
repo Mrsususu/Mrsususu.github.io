@@ -17,10 +17,10 @@ categories: 前端阅读
 
 window.value = 3;
 var myObject = {
-  value: 1,
-  getValue: function(){
-    console.log(this.value);
-  }
+    value: 1,
+    getValue: function(){
+      console.log(this.value);
+    }
 };
 myObject.getValue(); // 1  发现this指向了调用方法的对象myObject
 
@@ -34,14 +34,14 @@ myObject.getValue(); // 1  发现this指向了调用方法的对象myObject
 
 window.value = 3;
 var myObject = {
-  value: 1,
-  getValue: function(){
-    console.log(this.value); // 1 getValue方法内的this依然指向调用方法的对象myObject
-    var compare = function(){
-	    console.log(this.value); // 3 发现compare函数内的this指向了window，
-	  };
-	  compare();
-  }
+    value: 1,
+    getValue: function(){
+        console.log(this.value); // 1 getValue方法内的this依然指向调用方法的对象myObject
+        var compare = function(){
+            console.log(this.value); // 3 发现compare函数内的this指向了window，
+        };
+        compare();
+    }
 };
 myObject.getValue();  
 
@@ -53,15 +53,15 @@ myObject.getValue();
 
 window.value = 3;
 var myObject = {
-  value: 1,
-  getValue: function(){
-    var that = this; // 用一个变量缓存了this
-    console.log(that.value); // 1
-    var compare = function(){ // 本函数可以获取上下文中的that
-	    console.log(that.value); // 1
-	  };
-	  compare();
-  }
+    value: 1,
+    getValue: function(){
+        var that = this; // 用一个变量缓存了this
+        console.log(that.value); // 1
+        var compare = function(){ // 本函数可以获取上下文中的that
+            console.log(that.value); // 1
+        };
+        compare();
+    }
 };
 myObject.getValue();
 
@@ -74,10 +74,10 @@ myObject.getValue();
 
 window.value = 3;
 var myObject = function(value){
-  this.value = value; //实例属性
-  this.getValue = function(){ //实例方法
-    console.log(this); 
-  };
+    this.value = value; //实例属性
+    this.getValue = function(){ //实例方法
+        console.log(this); 
+    };
 };
 var newObject = new myObject(1); // 用new构造myObject的一个实例
 newObject.getValue(); // myObject{value:1} 发现this指向了实例对象
@@ -88,10 +88,10 @@ newObject.getValue(); // myObject{value:1} 发现this指向了实例对象
 
 window.value = 3;
 var myObject = function(value){
-  this.value = value; //实例属性
+    this.value = value; //实例属性
 };
 myObject.prototype.getValue = function(){ // 原型方法（所有实例共有）
-  console.log(this);
+    console.log(this);
 }
 var newObject = new myObject(1); // 用new构造myObject的一个实例
 newObject.getValue(); // myObject{value:1} 
@@ -106,13 +106,13 @@ newObject.getValue(); // myObject{value:1}
 
 window.value = 3;
 var myObject = function(value){
-  this.value = value; //实例属性
+    this.value = value; //实例属性
 };
 myObject.prototype.getValue = function(){ // 原型方法（所有实例共有）
-  console.log(this.value);
+    console.log(this.value);
 }
 var obj = {
-  value: 2
+    value: 2
 };
 myObject.prototype.getValue.apply(obj); // 2 发现this指向了obj
 

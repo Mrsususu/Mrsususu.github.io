@@ -20,10 +20,10 @@ categories: 前端技术
 {% highlight ruby %}
 var i = 0;
 var show = function(){
-		var j = i % 5; 
-		img.src = 'pic' + (j+1) + '.png';
-		i++;
-	}
+    var j = i % 5; 
+    img.src = 'pic' + (j+1) + '.png';
+    i++;
+};
 setInterval(show,1000);
 {% endhighlight %}
 <!-- {% highlight ruby %}
@@ -56,14 +56,14 @@ setInterval(show,1000);
 <p>写的时候也想了另一个js实现方案，比前面复杂点，思路就是将五帧循环封装为一个函数，然后将这个函数再设定setInterval即可。大概就是下面这样，五帧的自循环用个闭包就可以。</p>
 {% highlight ruby %}
 var show = function(){
-		for(var i = 1; i < 6; i++){
-			(function(j){
-				setTimeout(function(){
-					img.src = 'pic' + j + '.png';
-				},(j - 1)* 1000);
-			})(i);			
-		}
-	}
+    for(var i = 1; i < 6; i++){
+        (function(j){
+            setTimeout(function(){
+                img.src = 'pic' + j + '.png';
+            },(j - 1)* 1000);
+        })(i);			
+    }
+}
 setInterval(show,5000);
 {% endhighlight %}
 
@@ -73,11 +73,11 @@ setInterval(show,5000);
 {% highlight ruby %}
 #pic {width:100px;height:100px;} 
 @keyframes abc{
-	20% {background-image:url(pic1.png)}
-	40% {background-image:url(pic2.png)}
-	60% {background-image:url(pic3.png)}
-	80% {background-image:url(pic4.png)}
-	100% {background-image:url(pic5.png)}
+    20% {background-image:url(pic1.png)}
+    40% {background-image:url(pic2.png)}
+    60% {background-image:url(pic3.png)}
+    80% {background-image:url(pic4.png)}
+    100% {background-image:url(pic5.png)}
 }
 #pic{animation-name:abc;animation-duration:5s;animation-timing-function:linear;
 animation-iteration-count:infinite;}
@@ -96,11 +96,11 @@ animation-iteration-count:infinite;}
 {% highlight ruby %}
 #pic {width:100px;height:100px;} 
 @keyframes abc{
-	0% {background-image:url(pic1.png)}
-	20% {background-image:url(pic2.png)}
-	40% {background-image:url(pic3.png)}
-	60% {background-image:url(pic4.png)}
-	80% {background-image:url(pic5.png)}
+    0% {background-image:url(pic1.png)}
+    20% {background-image:url(pic2.png)}
+    40% {background-image:url(pic3.png)}
+    60% {background-image:url(pic4.png)}
+    80% {background-image:url(pic5.png)}
 }
 #pic{animation-name:abc;animation-duration:5s;animation-timing-function:step(5,start);
 animation-iteration-count:infinite;}
@@ -117,11 +117,11 @@ animation-iteration-count:infinite;}
 {% highlight ruby %}
 #pic {width:100px;height:100px;} 
 @keyframes abc{
-	20% {background-image:url(pic1.png)}
-	40% {background-image:url(pic2.png)}
-	60% {background-image:url(pic3.png)}
-	80% {background-image:url(pic4.png)}
-	100% {background-image:url(pic5.png)}
+    20% {background-image:url(pic1.png)}
+    40% {background-image:url(pic2.png)}
+    60% {background-image:url(pic3.png)}
+    80% {background-image:url(pic4.png)}
+    100% {background-image:url(pic5.png)}
 }
 #pic{animation-name:abc;animation-duration:5s;animation-timing-function:step-start;
 animation-iteration-count:infinite;}
