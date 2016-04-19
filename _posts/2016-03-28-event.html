@@ -1,0 +1,88 @@
+---
+layout: article
+title:  "事件兼容性相关"
+date:   2016-03-28
+author:  lishu
+categories: 前端阅读
+---
+
+<p>《JavaScript高级程序设计》的事件章对事件处理程序和事件对象的兼容性问题讲得很详细，本文是对该部分内容的总结。</p>
+<!--brief-->
+<h2>事件处理程序</h2>
+<h3>分类</h3>
+<p>事件处理程序主要分为四类(以点击click事件为例)：html事件处理程序(直接将"onclick"事件写在html标签中)、DOM0级事件处理程序(在js代码中使用.onclick)、DOM2级事件处理程序(使用addEventListener()操作事件)、IE事件处理程序(使用attachEvent()方法)</p>
+<p>其中有一点需要注意的是<em>DOM0级事件处理程序和DOM2级事件处理程序的区别</em>。两种方式看似类似，但是还是有差异存在的，DOM2级事件处理程序一个事件下可以添加多个事件处理程序，这些程序会按添加它们的顺序触发；而DOM0级事件处理程序无法添加多个事件处理程序，每次后面的事件处理程序会覆盖前面的。当然，除此之外还有一个小差异，addEventListener有三个参数，第三个参数可以设置不同阶段调用事件处理程序，设置为true的话就是在捕获阶段调用，false的话是在冒泡阶段调用(默认情况)。而DOM0级事件处理程序没有这个功能。</p>
+<p>还有一点是<em>使用attachEvent()和DOM0级方法的区别</em>。它们的区别主要在于<em>事件处理程序的作用域</em>。DOM0级方法的事件处理程序在其所属元素的作用域中运行，而attachEvent()方法的事件处理程序会在全局作用域中运行，也就是this = window。</p>
+<h3>兼容性处理</h3>
+<p>兼容性处理就是保证事件处理的代码在大多数浏览器下一致运行。</p>
+<p>这边就创建一个EventUtil对象作为兼容性处理方案，其接受三个参数：要操作的元素、事件名称和事件处理程序函数。</p>
+{% highlight ruby %}
+
+var EventUtil = {
+    addHandler: function(element, type, handler){
+        if (element.addEventListener){
+            element.addEventListener(type, handler, false); // DOM2
+        } else if (element.attachEvent){
+            element.attachEvent("on" + type, handler); // IE
+        } else {
+            element["on" + type] = handler; // DOM0
+        }
+    },
+    removeHandler: function(element, type, handler){
+        if (element.removeEventListener){
+            element.removeEventListener(type, handler, false); // DOM2
+        } else if (element.detachEvent){
+            element.detachEvent("on" + type, handler); // IE
+        } else {
+            element["on" + type] = null; // DOM0
+        }
+    }
+}
+
+{% endhighlight %}
+
+<h2>事件对象</h2>
+<p>在触发DOM上的某个事件时，会产生一个事件对象event。</p>
+<h3>分类</h3>
+<p>事件对象主要分为两类：DOM中事件对象、IE中事件对象。</p>
+<p>我们主要需要关注的就是对象的一些属性。主要是两类，一个是事件目标的获取，一个是默认事件的阻止。</p>
+<p>DOM中事件对象，可以通过event.target来获取事件目标，这边需要注意event.target和event.currentTarget的区别。event.currentTarget = this，也就是说其指的是注册了事件监听器的对象；event.target是指实际触发的对象，是事件的真正目标，其自身可能没有注册事件处理程序，但是可以冒泡到event.currentTarget然后事件被处理。</p>
+<p>DOM中事件对象的阻止默认事件，采用event.preventDefault()方法。</p>
+<p>IE中事件对象，可以通过event.srcElement来获取事件目标(类似于DOM中的event.target属性)。通过event.returnValue = false来阻止默认行为。</p>
+<h3>兼容性处理</h3>
+<p>我们在之前EventUtil对象上加以增强。</p>
+{% highlight ruby %}
+
+var EventUtil = {
+    addHandler: function(element, type, handler){
+        // 之前代码
+    },
+    removeHandler: function(element, type, handler){
+        // 之前代码
+    },
+    getEvent: function(event){  // 获取event
+        return event ? event : window.event;
+    },
+    getTarget: function(event){ // 获取事件目标target
+        return event.target || event.srcElement;
+    },
+    preventDefault: function(event){ // 阻止默认事件
+        if (event.preventDefault){
+            event.preventDefault();        
+        } else {
+            event.returnValue = false;    
+        }
+    },
+    stopPropagation: function(event){ // 阻止事件冒泡
+        if (event.stopPropagation){
+            event.stopPropagation();
+        } else {
+            event.cancelBubble = true;
+        }
+    }   
+}
+
+{% endhighlight %}
+
+
+
