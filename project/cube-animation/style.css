@@ -1,0 +1,48 @@
+
+.wrap {width:500px;height:500px;position:relative;}
+.boxes {width:200px;height:200px;position:absolute;top:50%;left:50%;margin-left:-100px;margin-top:-100px;}
+.box {width:200px;height:200px;border:1px solid;position:absolute;top:0;left:0;text-align:center;line-height:200px;font-size:25px;}
+
+/* 景深相关 */
+.wrap {perspective:600px;}
+.boxes {transform-style:preserve-3d;}
+
+/* 动画相关 */
+.boxes {animation:boxes 4s 3.0s linear infinite;}
+.top {animation:top 0.5s linear forwards;transition:background-color 2s, opacity 2s;}
+.bottom {animation:bottom 0.5s 0.5s linear forwards;transition:background-color 2s, opacity 2s;}
+.left {animation:left 0.5s 1.0s linear forwards;transition:background-color 2s, opacity 2s;}
+.right {animation:right 0.5s 1.5s linear forwards;transition:background-color 2s, opacity 2s;}
+.back {animation:back 0.5s 2.0s linear forwards;transition:background-color 2s, opacity 2s;}
+.front {animation:front 0.5s 2.5s linear forwards;transition:background-color 2s, opacity 2s;}
+
+.boxes:hover .top {background-color:red;opacity:0.8;}
+.boxes:hover .bottom {background-color:pink;opacity:0.8;}
+.boxes:hover .left {background-color:green;opacity:0.8;}
+.boxes:hover .right {background-color:blue;opacity:0.8;}
+.boxes:hover .back {background-color:yellow;opacity:0.8;}
+.boxes:hover .front {background-color:orange;opacity:0.8;}
+
+@keyframes top {
+	100% {transform:translateY(-100px) rotateX(90deg);}
+}
+@keyframes bottom {
+	100% {transform:translateY(100px) rotateX(-90deg);}
+} 
+@keyframes left {
+	100% {transform:translateX(-100px) rotateY(-90deg);}
+}
+@keyframes right {
+	100% {transform:translateX(100px) rotateY(90deg);}
+} 
+@keyframes back {
+	100% {transform:translateZ(-100px) rotateY(180deg);}
+}
+@keyframes front {
+	100% {transform:translateZ(100px);}
+} 
+@keyframes boxes {
+	100% {transform:rotate3d(1, 1, 1, 360deg);}
+} 
+
+

@@ -1,0 +1,47 @@
+---
+layout: article
+title:  "纯CSS3的立方体动画"
+date:   2016-04-01
+author:  lishu
+categories: 项目练习
+---
+
+<p>纯CSS3实现立方体运动动画。立方体从平面自动展开，展开后再进行自动旋转。</p>
+<!--brief-->
+
+<p>主要运用了CSS3的animation和transition属性，实现立方体展开和自动旋转变色功能。里面的关键点是对景深perspective的使用有了新的认识，</p>
+<h2>项目要求</h2>
+<p>1、将盒子从平面到展开到立方体。</p>
+<p>2、展开后，立方体沿着斜对角线自动旋转。</p>
+<p>3、鼠标hover上去后，立方体的表面会有变色；鼠标移开后，变色又消失。</p>
+<h2>实现结果</h2>
+<p><a href="/project/cube-animation/index.html" target="_blank">项目入口</a></p>
+<h2>个人心得</h2>
+<p>1、盒子的展开过程，使用transform的一些3d平移即可实现。由于是自动播放，所以以animation添加关键帧的形式添加。</p>
+<p>2、盒子的旋转过程，需要对整个立方体做一个transform的一些3d处理。</p>
+<p>3、由于有3d立体效果，所以需要添加景深perspective。注意景深的添加位置，添加在外层元素上和添加在自身元素上的效果是不同的，推荐张鑫旭的这篇介绍<a href="http://www.zhangxinxu.com/wordpress/2012/09/css3-3d-transform-perspective-animate-transition/" target="_blank">CSS3 3D transform变换</a>，里面的第六点把这个问题讲得很透彻。也就说，一般如果是一个组合变换的图形的话，在外层以stage视角观看是最合理的。因此这个例子里perspective我们也设置在最外层的盒子中。</p>
+<p>4、本例子需要实现两层3d变换，内层是立方体各个面从平面到立体的3d移动，外层是整个立方体的整体旋转。考虑到需要保证内外两层的3d效果都存在，因此就需要在外层设置transform-style:preserve-3d，以保证内层3d不被压平（因为默认是flat）。</p>
+<p>依据上面的3和4两点，可以看看<em>景深相关的代码</em>：</p>
+<p>html关键代码：</p>
+{% highlight ruby %}
+
+<div class="wrap">
+    <div class="boxes">
+        <div class="top box">top</div>
+        <div class="bottom box">bottom</div>
+        <div class="left box">left</div>
+        <div class="right box">right</div>
+        <div class="back box">back</div>
+        <div class="front box">front</div>
+    </div>
+</div>
+
+{% endhighlight %}
+<p>css关键代码：</p>
+{% highlight ruby %}
+
+/* 景深相关 */
+.wrap {perspective:600px;} // 对最外层wrap设置景深效果
+.boxes {transform-style:preserve-3d;} // 对外层boxes设置transform-style使得内层3d可以存在
+
+{% endhighlight %}
