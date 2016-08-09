@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>列表操作</title>
+	<style type="text/css">
+		*{margin: 0;padding: 0;}
+		button{outline: none;}
+		body{font-family: "Microsoft YaHei";font-size: 14px;}
+
+		table{margin: 20px auto 0;border: 2px solid #00bfa5;border-radius: 5px;}
+		table th, table td{padding: 5px 40px;text-align: center;} 
+		table th{background-color: #00bfa5;color: #fff;position: relative;}
+		table th span{position: absolute;display: block;cursor: pointer;}
+		table .delete{background-color: #81c0c0;border: none;border-radius: 2px;color: white;padding: 5px;}
+		.up{border: 6px solid transparent;border-bottom-color: rgba(255, 255, 255, 0.6);top: 0;right: 6px;}
+		.up:hover{border-bottom-color: rgba(255, 255, 255, 1);}
+		.down{border: 6px solid transparent;border-top-color: rgba(255, 255, 255, 0.6);bottom: 0;right: 6px;}
+		.down:hover{border-top-color: rgba(255, 255, 255, 1);}
+
+		button:hover{cursor: pointer;}
+		.table1, .table2{text-align: center;padding: 20px 0;}
+		.serInput{border: 2px solid #00bfa5;height: 30px;border-radius: 5px;font-size: 18px;}
+		.search{background-color: #00bfa5;border: none;border-radius: 5px;color: white;padding: 5px;margin-left: 5px;}
+	
+		.tb1, .tb2{text-align: center;}
+		.tb1 button, .tb2 button{padding: 10px 16px;margin: 0 20px;background-color: #81c0c0;border: none;border-radius: 5px;color: white;font-weight: bold;}
+
+		.hide{display: none;}
+	</style>
+</head>
+<body>
+	<div class="table1">
+		
+	</div>
+	<div class="tb1">
+		<button data-insert="data1">add data1 to table1</button>
+		<button data-insert="data2">add data2 to table1</button>
+		<button data-insert="data3">add data3 to table1</button>
+
+	</div>
+	<div class="table2"></div>
+	<div class="tb2">
+		<button data-insert="data1">add data1 to table1</button>
+		<button data-insert="data2">add data2 to table1</button>
+		<button data-insert="data3">add data3 to table1</button>
+
+	</div>
+<!-- 	<table>
+		<thead>
+			<tr>
+				<th>Name<span class="up"></span><span class="down"></span></th>
+				<th data-type="chinese">Chinese<span class="up"></span><span class="down"></span></th>
+				<th data-type="math">Math<span class="up"></span><span class="down"></span></th>
+				<th data-type="english">English<span class="up"></span><span class="down"></span></th>
+				<th data-type="physical">Physical<span class="up"></span><span class="down"></span></th>
+				<th data-type="all">All<span class="up"></span><span class="down"></span></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>小李</td>
+				<td>89</td>
+				<td>74</td>
+				<td>91</td>
+				<td>60</td>
+				<td>314</td>								
+			</tr>
+			<tr>
+				<td>小高</td>
+				<td>86</td>
+				<td>99</td>
+				<td>73</td>
+				<td>87</td>
+				<td>345</td>								
+			</tr>
+			<tr>
+				<td>小丁</td>
+				<td>100</td>
+				<td>77</td>
+				<td>95</td>
+				<td>65</td>
+				<td>337</td>								
+			</tr>
+			<tr>
+				<td>小吴</td>
+				<td>79</td>
+				<td>86</td>
+				<td>88</td>
+				<td>82</td>
+				<td>335</td>								
+			</tr>
+		</tbody>
+	</table> -->
+
+<!-- 	注意，
+	1、../可以获得父级作用域，../../可以获得父亲的父亲级作用域
+	2、registerHelper在使用时。如果传入变量，则为变量实际值；如果传入自己写入的变量，则都需要以字符串形式输入。在registerHelper内比较时，可能需要使用类型转换。-->
+    <script id="headTemplate" type="text/x-handlebars-template">
+    	{{#if hasSearch}}
+    	<input class="serInput" placeholder="按兴趣爱好搜索"><button class="search">Search</button>
+    	{{/if}}
+        <table>
+        	<thead>
+        		<tr>
+        			{{#each datas}}
+        				<th data-type="{{this}}">{{this}}
+        				{{#equalItem @index ../unSortColumn}}
+        					<span class="up"></span><span class="down"></span>
+        				{{/equalItem}}
+        				</th>
+        			{{/each}}
+        			{{#if hasDeletebutton}}
+        				<th>operate</th>
+        			{{/if}}					
+        		</tr>
+        	</thead>
+        	<tbody>
+        	</tbody>
+        </table>
+    </script>
+
+    <script id="bodyTemplate" type="text/x-handlebars-template">
+
+    	{{#each datas}}
+	    	{{#compare3 this.isShow "==" "true"}}
+	    	<tr>
+	    		{{#each this}}
+	    			{{#compare2 @key "!=" "id" "isShow"}}
+	    			<td>{{this}}</td>
+	    			{{/compare2}}	
+	    		{{/each}}
+		    	{{#if ../../hasDeletebutton}}
+		    		<td><button class="delete" data-id="{{this.id}}">delete</button></td>
+		    	{{/if}}			
+	    	</tr>
+	    	{{/compare3}}
+    	{{/each}}
+    </script>
+
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script src="js/handlebars.js"></script>
+	<script src="js/sort.js"></script>
+	
+</body>
+</html>

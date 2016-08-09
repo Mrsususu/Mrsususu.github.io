@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<style type="text/css">
+		.outer, .outer01, .outer02, .outer11, .outer12, .outer21, .outer22{border: 1px solid;display: flex;padding: 20px;justify-content: space-between;background-color: transparent;}
+		.outer{width: 800px;height: 250px;}
+		.outer01, .outer02{width: 320px;}
+		.outer11, .outer12{width: 100px;}
+		.outer21, .outer22{width: 0px;}
+
+		.btn{width: 840px;margin-top: 20px;text-align: center;}
+
+		.color{background-color: pink;}
+
+		.trans{animation: trans .5s;}
+		@keyframes trans{
+			0%{background-color: transparent;}
+			50%{background-color: pink;}
+			100%{background-color: transparent;}
+		}
+	</style>
+</head>
+<body>
+	<div class="ta outer">
+		<div class="tb outer01 tree">
+			<div class="tc outer11 t">
+				<div class="td outer21"></div>
+				<div class="te outer22"></div>
+			</div>
+			<div class="tf outer12">
+				<div class="tg outer21"></div>
+				<div class="th outer22"></div>				
+			</div>
+		</div>
+		<div class="ti outer02">
+			<div class="tj outer11">
+				<div class="tk outer21"></div>
+				<div class="tl outer22"></div>				
+			</div>
+			<div class="tm outer12">
+				<div class="tn outer21"></div>
+				<div class="to outer22"></div>				
+			</div>			
+		</div>
+	</div>
+	<div class="btn">
+		<button>start</button>
+		<select>
+			<option value = "0">先序遍历</option>
+			<option value = "1">中序遍历</option>
+			<option value = "2">后序遍历</option>
+		</select>
+	</div>	
+</body>
+<script type="text/javascript">
+	$(function(){
+		var type = "0";
+		var time;
+
+		$("button").on("click", function(){
+			// 清理已有全部定时器
+			if(time){
+				clearInterval(time);
+			}	
+
+			var arr = [];
+			preOrder($(".outer"), arr, type);
+			print(arr);			
+		});
+
+		// 选择一种遍历方式
+		$("select").on("change", function(){
+			type = $("select").children("option:selected").val();
+		});
+
+		// 二叉树遍历函数
+		function preOrder($node, arr, type){
+			
+			if(!$node.length){
+				return;
+			}
+			
+			if(type === "0"){
+			// 先序遍历
+				arr.push($node);			
+				preOrder($node.children("div:first-child"), arr, type);
+				preOrder($node.children("div:last-child"), arr, type);				
+			}else if(type === "1"){	
+			// 中序遍历		
+				preOrder($node.children("div:first-child"), arr, type);
+				arr.push($node);
+				preOrder($node.children("div:last-child"), arr, type);				
+			}else if(type === "2"){
+			// 后序遍历
+				preOrder($node.children("div:first-child"), arr, type);
+				preOrder($node.children("div:last-child"), arr, type);
+				arr.push($node);				
+			}
+				
+		}
+
+		// 设置定时器依次打印出二叉树遍历结果
+		function print(arr){
+			// var isAdd = false;
+			// var current;
+			// time = setInterval(function(){
+			// 	if(arr.length != 0 || (arr.length == 0 && current !== null)){
+			// 		if(!isAdd){
+			// 			current = arr.shift();
+			// 			current.addClass("color");
+			// 		}else{
+			// 			current.removeClass("color");
+			// 			current = null;
+			// 		}
+			// 		isAdd = !isAdd;	
+			// 	}else{
+			// 		clearInterval(time);
+			// 	}				
+			// }, 500);	
+
+			$(".trans").removeClass("trans");
+
+			time = setInterval(function(){
+				if(arr.length != 0){
+					arr.shift().addClass("trans");
+				}else{
+					clearInterval(time);
+				}				
+			}, 500);	
+		}
+
+	})
+</script>
+</html>
