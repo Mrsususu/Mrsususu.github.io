@@ -1,0 +1,92 @@
+---
+layout: article
+title:  "表单小技巧"
+date:   2016-09-01
+author:  lishu
+categories: 前端技术
+---
+
+<p>最近项目中遇到一个表单的小需求，将label和input并排放置，然后使得这两个框相对于外框垂直居中，需要兼容ie8。本文提出一种解决这个问题的方案。</p>
+<!--brief-->
+<p>刚看到这个需求时，觉得是个很容易的需求，但是实际写的时候发现还是有一些小坑，这里记录一下，提出一个方案。</p>
+<h2>需求描述</h2>
+<p>将label和input并排放置，然后使得这两个框相对于外框垂直居中，需要兼容ie8。同时label可能出现两行的情况，要保证label两行时也能保证居中。</p>
+<p>大意如下图所示(粉色为外框，内部左侧灰色框为label，右侧为input框)：</p>
+<p><img src="{{ site.baseurl }}/img/article/inputBox01.png" alt="inputBox01"></p>
+<p>在这个方案中，由于要兼容ie8，所以垂直居中的利器flex无法使用。因而这里采用将label和input都以inline-block的形式进行控制。</p>
+<h2>遇到问题</h2>
+<p>刚开始写时，考虑这就是一个两个子元素垂直居中的问题，因而就想采用“内部元素设置inline-block，外部元素设置vertical-align: middle;”的方式。</p>
+<h3>主要代码如下：</h3>
+<p>PS：这边有另外一点需要主要，内部两个元素设置inline-block时，两个元素之间会出现一些小缝隙，这是由于元素标签间空格导致的，这里通过外层设置font-size:0来解决。对于这个问题的出现原因和应对方案，张鑫旭的文章介绍得很详细，可以参看<a href="http://www.zhangxinxu.com/wordpress/2012/04/inline-block-space-remove-%E5%8E%BB%E9%99%A4%E9%97%B4%E8%B7%9D/" target="_blank">去除inline-block元素间间距的N种方法</a>。</p>
+<p>html：</p>
+{% highlight ruby %}
+
+<div class="item">
+	<label for="name1">我是姓名长长长</label>
+	<div class="inputBox">
+		<input id="name1" placeholder="需要字符和数字组合">
+	</div>
+</div>
+
+{% endhighlight %}
+<p>css(核心代码)：</p>
+{% highlight ruby %}
+
+.item {
+	display: inline-block;
+	font-size: 0px;
+	vertical-align: middle;
+}
+
+.item label {
+	display: inline-block;
+	line-height:16px;;
+	font-size: 10px;
+}
+
+.item .inputBox {
+  display: inline-block;
+  font-size: 18px;
+}
+
+{% endhighlight %}
+<h3>全部代码demo：</h3>
+<p><a href="http://codepen.io/Mrsusu/pen/gwOaGJ" target="_blank">codepen代码演示点击这里</a></p>
+<p>会发现显示会有异常(如下图)：</p>
+<p><img src="{{ site.baseurl }}/img/article/inputBox02.png" alt="inputBox02"></p>
+<p>也就是label当达到多行时，其实没有达到居中的效果。label框有一定程度的偏移。</p>
+
+<h2>分析及解决</h2>
+<p>其实这个问题是由于外层为了解决inline-block元素间的间距问题，使用了font-size:0，而导致内部两个inline-block之间和外层整体基线对齐出现偏差。</p>
+<p>这个问题其实是基线对齐导致的，基线问题张鑫旭也有文章详细解释，可以参看<a href="http://www.zhangxinxu.com/wordpress/2015/08/css-deep-understand-vertical-align-and-line-height/" target="_blank">深入理解vertical-align和line-height的基友关系</a></p>
+
+<p>修正后css(核心代码)：</p>
+{% highlight ruby %}
+
+.item {
+	display: inline-block;
+	font-size: 16px; // 第一：将外层字体大小设置为和label的line-height一致。
+}
+
+.item label {
+	display: inline-block;
+	line-height:16px;;
+	font-size: 10px;
+	vertical-align: middle; // 第二：label添加vertical-align: middle;
+}
+
+.item .inputBox {
+  display: inline-block;
+  font-size: 18px;
+  margin-left: -8px; // 第三：采用负margin解决inline-block元素间有间隔的问题
+}
+
+{% endhighlight %}
+<h3>修正后全部代码demo：</h3>
+<p><a href="http://codepen.io/Mrsusu/pen/EgxVbo" target="_blank">codepen代码演示点击这里</a></p>
+<p>会发现此时左侧显示居中效果了，实现了需求。</p>
+<p><img src="{{ site.baseurl }}/img/article/inputBox01.png" alt="inputBox01"></p>
+
+<h2>备注</h2>
+<p>1、主要解决的方案是前面提到的三点修正案。</p>
+<p>2、现在常见的表单中，由于一般label都不会有多行的情况，所以日常解决方案可能就是label设置高度和外层一样，然后设置label的行高和高度一样实现文字居中。这其实是一种“伪居中”，虽然可以实现需求但是局限性就是只能满足单行的条件。如果遇到可能有多行的问题，还是需要采用本文提出的解决方案。</p>
