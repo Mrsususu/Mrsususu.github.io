@@ -1,0 +1,68 @@
+---
+layout: article
+title:  "addEventListener第三参数"
+date:   2016-09-07
+author:  lishu
+categories: 前端技术
+---
+
+<p>在事件绑定中，addEventListener存在第三参数。但是实际工作中其实对这个参数的认识有时会有一些误区，不知道如何正确在项目中运用，本文通过几个实例来具体解释。</p>
+<!--brief-->
+
+<p>说起来这其实是一个很简单的概念，高程中介绍了这第三参数的作用是false时为冒泡阶段触发，true时为捕获时候触发。但是这个“冒泡阶段”和“捕获阶段”的认识其实很多时候会存在偏差，也会导致了实际中不能有效发挥这个第三参数的作用。</p>
+
+
+<h2>事件流的概念</h2>
+<p>事件流的过程为：document根元素 ->(捕获) 目标元素 ->(冒泡) document根元素</p>
+<p>而addEventListener第三参数的作用就是，当对A元素绑定事件AEvent，而A内包含了元素a并绑定了事件aEvent，点击a元素时，决定事件AEvent和事件aEvent触发顺序的先后。</p>
+<p>因此需要注意的是，addEventListener第三参数是对<em class="em cl">当前元素的内部元素</em>起作用，而非对当前元素起效。</p>
+<p>针对前面的例子，对外层元素A的事件AEvent设置第三参数为false，那么就说明当a元素事件触发时，事件先走到<em class="em cl">A元素 -> a元素(触发a元素的aEvent) -> A元素(触发A元素的AEvent)</em></p>
+<p>相对地，对外层元素A的事件AEvent设置第三参数为true，那么就说明当a元素事件触发时，事件先走到<em class="em cl">A元素(触发A元素的AEvent) -> a元素(触发a元素的aEvent) -> A元素</em></p>
+
+<h3>demo例子：</h3>
+<p>为了验证这个事件流发生触发的过程，下面用<a href="http://jsbin.com/kuzebupice/edit?html,css,js,console,output" target="_blank">一个小例子</a>来说明。</p>
+<p>这个例子里我们设置，外层元素为div，内层元素为span，对内外层元素都绑定了事件(执行打印信息到控制台的操作)。点击内部元素span时，观察控制台输出信息的情况。</p>
+<p>通过运行代码，可以明显的发现，对外层元素div的事件第三参数设置为<em class="em cl">true</em>时，打印出来的值为<em class="em cl">先"in div"后"in span"</em>，因此证明先触发了外层元素，后触发了内层目标元素。而对外层元素div的事件第三参数设置为<em class="em cl">false</em>时，打印出来的值为<em class="em cl">先"in span"后"in div"</em>，因此证明先触发了内层目标元素，后触发了外层元素。</p>
+<p>这个例子已经很形象地说明了问题。</p>
+
+<h2>用到第三参数的几个例子</h2>
+<h3>1、针对非冒泡事件的处理</h3>
+<p>“针对非冒泡事件的处理”这个描述比较难理解，其实简单来说就是，有一些事件(例如“focus”，<a href="https://developer.mozilla.org/en-US/docs/Web/Events/focus" target="_blank">focus的事件属性查阅</a>)，在查阅其属性时可以发现其Bubbles为NO，也就是说这个事件自身不会冒泡。那么如果想要用事件委托来处理这些事件时，如果对第三参数不做设置(默认值为false)，就会发生事件委托不起效的问题。</p>
+<p><a href="http://jsbin.com/kepixodude/edit?html,js,console,output" target="_blank">示例demo点击此处</a></p>
+<p>上面的demo中我们可以发现，当聚焦文本框时，控制台只打印出“true”而没有打印出“false”。也就是说，我们对input元素的外层元素做了事件绑定，而该事件委托只有在第三参数为“true”时才起效。这正是因为“focus”为非冒泡事件，事件自身没有冒泡过程，因此外层事件在冒泡时触发不会有作用。</p>
+<p>当然，一般事件都是有冒泡过程的，所以不用担心这个问题。只是说，<em class="em cl">如果非冒泡事件需要执行事件委托，就需要第三参数设置为“true”</em>。</p>
+
+<h3>2、用于控制事件发生的先后</h3>
+<p>这个用途源于我最近做的一个笔试题，题目是这样的：</p>
+<p>文档流中有一个元素A，除去点击A，点击文档流中任何一个元素让A隐藏。使用两种方案解决。这是一个填空题，题干如下：</p>
+
+{% highlight ruby %}
+// 方案一
+document.addEventListener("click", function(){
+	A.style.display = "none";
+}, ____);
+
+A.addEventListener("click", function(e){
+	_________;
+});
+
+// 方案二
+document.addEventListener("click", function(){
+	hiddenTimeout = setTimeout(function(){
+		A.style.display = "none";
+	}, 20);
+}, ____);
+
+A.addEventListener("click", function(e){
+	if(hiddenTimeout){
+    	_________;
+	}
+});
+{% endhighlight %}
+
+<p>其实这题就是利用了第三参数来控制事件触发的先后，以来达到效果。</p>
+<p><a href="http://jsbin.com/hopapegazi/1/edit?html,js,output" target="_blank">题目解答点击此处</a></p>
+<p>思路就是：第一题对所有元素绑定事件委托，使其在点击时控制A不显示，而在这个事件触发前先让A元素阻止冒泡，即<em>先触发A上的click，再触发document上的click</em>；第二题是用定时器先设置元素不显示，然后对于A元素再清除此定时器，即<em>先触发ocument上的click，再触发A上的click</em>。</p>
+
+
+
